@@ -1,9 +1,10 @@
 <?php
 require_once __DIR__ . '/config/db.php';
+require_once __DIR__ . '/config/mail.php';
 setCorsHeaders();
 
 $pdo = getDBConnection();
-$method = $_SERVER['REQUEST_METHOD'];
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 if ($method === 'POST') {
     // Read input from JSON or standard POST form data
@@ -41,24 +42,18 @@ if ($method === 'POST') {
         $messageId = (int)$pdo->lastInsertId();
 
         // 2. Dispatch Email notification to hello@netspacedev.com
-        $toEmail = getenv('CONTACT_TO_EMAIL') ?: 'hello@netspacedev.com';
-        $fromEmail = getenv('CONTACT_FROM_EMAIL') ?: 'no-reply@netspacedev.com';
+        $toEmail     = MAIL_TO_ADDRESS;
+        $htmlBody    = buildContactEmailHtml($name, $email, $subject, $message, $messageId);
+        $fullSubject = "[NetSpace Inquiry #" . $messageId . "] " . $subject;
 
-        $emailSent = sendContactNotificationEmail(
-            $toEmail,
-            $fromEmail,
-            $name,
-            $email,
-            $subject,
-            $message,
-            $messageId
-        );
+        $mailResult = sendNetSpaceEmail($toEmail, $fullSubject, $htmlBody, $email, $name);
 
         sendJsonResponse([
-            'success'    => true,
-            'message'    => 'Thank you! Your message has been received. Our engineering team will contact you shortly.',
-            'message_id' => $messageId,
-            'email_sent' => $emailSent
+            'success'     => true,
+            'message'     => 'Thank you! Your message has been received. Our engineering team will contact you shortly.',
+            'message_id'  => $messageId,
+            'mail_status' => $mailResult['success'] ? 'sent' : 'failed',
+            'mail_driver' => $mailResult['driver']
         ], 201);
     } catch (PDOException $e) {
         sendJsonResponse([
@@ -71,38 +66,26 @@ if ($method === 'POST') {
 sendJsonResponse(['success' => false, 'error' => 'Method not allowed'], 405);
 
 /**
- * Sends a modern, responsive HTML notification email to hello@netspacedev.com
+ * Builds responsive dark-themed HTML email content matching NetSpace Dev branding
  */
-function sendContactNotificationEmail(
-    string $toEmail,
-    string $fromEmail,
+function buildContactEmailHtml(
     string $name,
     string $email,
     string $subject,
     string $message,
     int $messageId
-): bool {
-    // Sanitize headers to prevent header injection attacks
-    $safeName    = trim(str_replace(["\r", "\n", "%0a", "%0d"], '', $name));
-    $safeEmail   = trim(str_replace(["\r", "\n", "%0a", "%0d"], '', $email));
-    $safeSubject = trim(str_replace(["\r", "\n", "%0a", "%0d"], '', $subject));
-
-    $fullSubject = "[NetSpace Inquiry #" . $messageId . "] " . $safeSubject;
-    $encodedSubject = '=?UTF-8?B?' . base64_encode($fullSubject) . '?=';
-
+): string {
     $dateTime  = date('Y-m-d H:i:s T');
     $clientIp  = $_SERVER['REMOTE_ADDR'] ?? 'Unknown';
-    $userAgent = htmlspecialchars($_SERVER['HTTP_USER_AGENT'] ?? 'Unknown', ENT_QUOTES, 'UTF-8');
 
-    $escapedName    = htmlspecialchars($safeName, ENT_QUOTES, 'UTF-8');
-    $escapedEmail   = htmlspecialchars($safeEmail, ENT_QUOTES, 'UTF-8');
-    $escapedSubject = htmlspecialchars($safeSubject, ENT_QUOTES, 'UTF-8');
+    $escapedName    = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+    $escapedEmail   = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+    $escapedSubject = htmlspecialchars($subject, ENT_QUOTES, 'UTF-8');
     $escapedMessage = nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
 
-    $replyMailto = "mailto:{$escapedEmail}?subject=" . rawurlencode("Re: {$safeSubject} - NetSpace Dev");
+    $replyMailto = "mailto:{$escapedEmail}?subject=" . rawurlencode("Re: {$subject} - NetSpace Dev");
 
-    // Modern HTML Email Template styled in NetSpace Dev theme
-    $htmlBody = <<<HTML
+    return <<<HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -174,28 +157,4 @@ function sendContactNotificationEmail(
 </body>
 </html>
 HTML;
-
-    // Email headers
-    $headers = [
-        'MIME-Version: 1.0',
-        'Content-Type: text/html; charset=UTF-8',
-        'From: NetSpace Dev <' . $fromEmail . '>',
-        'Reply-To: ' . $safeName . ' <' . $safeEmail . '>',
-        'X-Mailer: PHP/' . phpversion(),
-        'X-Priority: 1 (Highest)',
-        'Importance: High'
-    ];
-
-    $headersStr = implode("\r\n", $headers);
-
-    // Attempt to send email via standard PHP mail()
-    // Suppress warnings in case local dev environment lacks sendmail/MTA
-    $sent = @mail($toEmail, $encodedSubject, $htmlBody, $headersStr, "-f" . $fromEmail);
-
-    if (!$sent) {
-        // Fallback without -f flag if restricted by server configuration
-        $sent = @mail($toEmail, $encodedSubject, $htmlBody, $headersStr);
-    }
-
-    return (bool)$sent;
 }
