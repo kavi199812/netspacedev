@@ -7,8 +7,8 @@ ServerSignature Off
     RewriteEngine On
     RewriteBase /
 
-    # Allow direct access to admin, api, uploads, and existing files
-    RewriteCond %{REQUEST_URI} ^/admin [OR]
+    # Allow direct access to netspace, api, uploads, and existing files
+    RewriteCond %{REQUEST_URI} ^/netspace [OR]
     RewriteCond %{REQUEST_URI} ^/api [OR]
     RewriteCond %{REQUEST_URI} ^/uploads [OR]
     RewriteCond %{REQUEST_FILENAME} -f [OR]

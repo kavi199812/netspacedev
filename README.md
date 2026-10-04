@@ -18,10 +18,10 @@ Modern multi-page company website built with **Astro**, powered by a **PHP 8.4 R
 
 - **Backend & Admin Console (PHP + MySQL):**
   - **4-Digit PIN Authentication:** Instant access with 4-digit PIN (Default: `1234`). Auto-submitting keypad & touch buttons.
-  - **Projects Manager (`/admin/projects.php`):** Add, edit, delete projects with image uploads and featured showcase toggle.
-  - **Blog Manager (`/admin/blogs.php`):** Write, edit, delete articles with cover image upload, tags, and status (Published/Draft).
-  - **Client Inquiries (`/admin/messages.php`):** View inquiries sent from the website contact form, mark read/unread, delete.
-  - **PIN Settings (`/admin/settings.php`):** Easily change the 4-digit security PIN anytime.
+  - **Projects Manager (`/netspace/projects.php`):** Add, edit, delete projects with image uploads and featured showcase toggle.
+  - **Blog Manager (`/netspace/blogs.php`):** Write, edit, delete articles with cover image upload, tags, and status (Published/Draft).
+  - **Client Inquiries (`/netspace/messages.php`):** View inquiries sent from the website contact form, mark read/unread, delete.
+  - **PIN Settings (`/netspace/settings.php`):** Easily change the 4-digit security PIN anytime.
 
 ---
 
@@ -33,7 +33,7 @@ Modern multi-page company website built with **Astro**, powered by a **PHP 8.4 R
 
 ### 2. URLs
 - **Astro Frontend:** [http://localhost:4321/](http://localhost:4321/)
-- **PHP Admin Console:** [http://localhost/netspacedev/admin/login.php](http://localhost/netspacedev/admin/login.php)
+- **PHP Admin Console:** [http://localhost/netspacedev/netspace/login.php](http://localhost/netspacedev/netspace/login.php)
   - **Default PIN:** `1234`
 - **REST APIs:**
   - Projects: `http://localhost/netspacedev/api/projects.php`
@@ -71,7 +71,7 @@ This generates production files in the `dist/` directory.
 ### Step 3: Upload to Hostinger `public_html`
 Upload the following into Hostinger's **`public_html/`**:
 - Contents of the `dist/` folder (HTML, CSS, JS)
-- `admin/` folder (PHP Admin Console)
+- `netspace/` folder (PHP Admin Console)
 - `api/` folder (PHP REST APIs)
 - `public/uploads/` folder (Uploaded images)
 - `.htaccess` (Apache routing rules)
