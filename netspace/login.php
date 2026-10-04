@@ -121,7 +121,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="login-card" style="text-align: center; max-width: 380px;">
     <div class="login-header" style="margin-bottom: 1.2rem;">
-        <div class="brand-logo-icon" style="margin: 0 auto 12px; width: 48px; height: 48px; font-size: 1.4rem;">N</div>
+        <div class="brand-logo-icon" style="margin: 0 auto 14px; width: 56px; height: 56px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); padding: 8px; display: grid; place-items: center; border-radius: var(--radius-md);">
+            <img src="../logo-white.png" alt="NetSpace" style="width: 100%; height: 100%; object-fit: contain;">
+        </div>
         <h1>Enter Security PIN</h1>
         <p>Enter 4-digit code to access NetSpace Console</p>
     </div>

@@ -23,7 +23,9 @@ $flash = getFlash();
 <header class="admin-header">
     <div class="admin-header-inner">
         <a href="index.php" class="brand-badge">
-            <span class="brand-logo-icon">N</span>
+            <span class="brand-logo-icon" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border); padding: 4px; display: grid; place-items: center;">
+                <img src="../logo-white.png" alt="NetSpace" style="width: 100%; height: 100%; object-fit: contain;">
+            </span>
             <span>NetSpace <span style="font-weight: 400; color: var(--accent); font-size: 0.9rem;">Studio</span></span>
         </a>
 
@@ -53,7 +55,7 @@ $flash = getFlash();
             </li>
             <li>
                 <a href="settings.php" class="nav-link <?= $currentScript === 'settings.php' ? 'active' : '' ?>">
-                    <span>PIN Settings</span>
+                    <span>Settings & Logo</span>
                 </a>
             </li>
         </ul>
