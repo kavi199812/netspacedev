@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import TechStackSlider from '../components/TechStackSlider.astro';
 import { fetchProjects, fetchBlogs } from '../utils/api.js';
 
 const allProjects = await fetchProjects();
@@ -47,6 +48,9 @@ const recentBlogs = allBlogs.slice(0, 2);
       </div>
     </div>
   </section>
+
+  <!-- Technologies & Stacks Slider -->
+  <TechStackSlider />
 
   <!-- Featured Projects Section (Above Recent Posts) -->
   <section class="content-section">

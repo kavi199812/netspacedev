@@ -1,0 +1,130 @@
+---
+// Tech Stack Slider Component (Infinite Smooth Marquee)
+const techStacks = [
+  { name: 'Node.js', type: 'node', color: '#68a063' },
+  { name: 'PHP 8.4', type: 'php', color: '#777bb4' },
+  { name: 'React', type: 'react', color: '#61dafb' },
+  { name: 'MongoDB', type: 'mongo', color: '#47a248' },
+  { name: 'MySQL', type: 'mysql', color: '#00758f' },
+  { name: 'Cloudflare', type: 'cloudflare', color: '#f38020' },
+  { name: 'Bootstrap', type: 'bootstrap', color: '#7952b3' },
+  { name: 'TailwindCSS', type: 'tailwind', color: '#38bdf8' },
+  { name: 'Astro', type: 'astro', color: '#ff5d01' },
+  { name: 'TypeScript', type: 'ts', color: '#3178c6' },
+  { name: 'Docker', type: 'docker', color: '#2496ed' },
+  { name: 'Python', type: 'python', color: '#ffca28' },
+  { name: 'Redis', type: 'redis', color: '#dc382d' }
+];
+
+// Duplicate for infinite seamless marquee loop
+const duplicatedStacks = [...techStacks, ...techStacks];
+---
+
+<section class="tech-stack-section">
+  <div class="tech-stack-head">
+    <span class="tech-stack-title">Technologies & Stacks</span>
+  </div>
+
+  <div class="marquee-wrapper">
+    <div class="marquee-track">
+      {duplicatedStacks.map((tech) => (
+        <div class="tech-pill">
+          <span class="tech-dot" style={`background-color: ${tech.color}; box-shadow: 0 0 8px ${tech.color}80;`}></span>
+          <span class="tech-name">{tech.name}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .tech-stack-section {
+    margin: 2rem 0 2.25rem;
+    position: relative;
+  }
+
+  .tech-stack-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .tech-stack-title {
+    font-size: var(--step--1);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+  }
+
+  .marquee-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 0.4rem 0;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 0.85rem;
+    width: max-content;
+    animation: scroll-left 28s linear infinite;
+  }
+
+  .marquee-wrapper:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .tech-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.45rem 1rem;
+    background: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--fg);
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    user-select: none;
+    cursor: default;
+  }
+
+  .tech-pill:hover {
+    border-color: var(--border-hover, #3b4252);
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-2px);
+  }
+
+  .tech-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .tech-name {
+    letter-spacing: 0.01em;
+  }
+
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-50% - 0.425rem));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+      flex-wrap: wrap;
+    }
+  }
+</style>
