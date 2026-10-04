@@ -1,0 +1,191 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { fetchProjects } from '../utils/api.js';
+
+const initialProjects = await fetchProjects();
+---
+
+<BaseLayout title="Portfolio & Projects" description="Browse software applications, platforms, and client systems engineered by NetSpace.">
+  <div style="padding: 2.5rem 0;">
+    <div class="hero-pill">
+      <span>Software Portfolio</span>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+      <div>
+        <h1 style="font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem;">
+          Featured Projects & Works
+        </h1>
+        <p style="font-size: 1.05rem; color: var(--fg-muted); max-width: 36rem;">
+          Production platforms, distributed microservices, and mobile products engineered for clients worldwide.
+        </p>
+      </div>
+
+      <a href="http://localhost/netspacedev/admin/project-edit.php" target="_blank" class="btn btn-outline" style="font-size: 0.85rem; padding: 0.5rem 0.9rem;">
+        + Add via Admin (PIN: 1234)
+      </a>
+    </div>
+
+    <!-- Filter Buttons & Search -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 1.25rem;">
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="filterBar">
+        <button class="filter-btn active" data-category="all">All Projects</button>
+        <button class="filter-btn" data-category="Web Development">Web Apps</button>
+        <button class="filter-btn" data-category="Mobile App">Mobile Apps</button>
+        <button class="filter-btn" data-category="Enterprise Software">Enterprise</button>
+        <button class="filter-btn" data-category="AI & Healthcare">AI & Machine Learning</button>
+        <button class="filter-btn" data-category="Cloud Software">Cloud & SaaS</button>
+      </div>
+
+      <div style="width: 100%; max-width: 260px;">
+        <input 
+          type="text" 
+          id="projectSearch" 
+          placeholder="Filter by keyword or stack..." 
+          class="form-control" 
+          style="padding: 0.5rem 0.8rem; font-size: 0.88rem;"
+        />
+      </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="card-grid" id="projectsContainer">
+      {initialProjects.map((p) => (
+        <article class="compact-card project-card" data-category={p.category} data-title={p.title.toLowerCase()} data-tech={p.technologies ? p.technologies.toLowerCase() : ''} id={p.slug}>
+          <img 
+            src={p.image_url || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80'} 
+            alt={p.title} 
+            class="card-thumb" 
+            loading="lazy" 
+          />
+          
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+            <div class="card-category">{p.category}</div>
+            {p.is_featured === 1 || p.is_featured === '1' ? (
+              <span style="font-size: 0.72rem; color: var(--accent); font-weight: 600;">★ Featured</span>
+            ) : null}
+          </div>
+
+          <h2 class="card-title">
+            {p.title}
+          </h2>
+
+          <p class="card-summary">
+            {p.summary}
+          </p>
+
+          {p.description ? (
+            <p style="font-size: 0.82rem; color: var(--fg-subtle); margin-bottom: 1rem; line-height: 1.5; background: rgba(0,0,0,0.15); padding: 0.6rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+              {p.description}
+            </p>
+          ) : null}
+
+          <div style="margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 0.35rem;">
+            {p.technologies && p.technologies.split(',').map((tech) => (
+              <span class="tech-badge" style="font-size: 0.72rem; padding: 0.2rem 0.45rem;">
+                {tech.trim()}
+              </span>
+            ))}
+          </div>
+
+          <div class="card-meta">
+            <span>Client: <strong>{p.client_name || 'Proprietary'}</strong></span>
+            <div style="display: flex; gap: 0.75rem;">
+              {p.live_url ? (
+                <a href={p.live_url} target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600;">
+                  Live Demo ↗
+                </a>
+              ) : null}
+              {p.github_url ? (
+                <a href={p.github_url} target="_blank" rel="noopener noreferrer" style="color: var(--fg-muted);">
+                  Code ↗
+                </a>
+              ) : null}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Empty State -->
+    <div id="noResultsMsg" style="display: none; text-align: center; padding: 4rem 1rem;">
+      <p style="font-size: 1.1rem; color: var(--fg-muted);">No projects match your selected filter.</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .filter-btn {
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    color: var(--fg-muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .filter-btn:hover {
+    color: var(--fg-default);
+    border-color: var(--border-active);
+  }
+
+  .filter-btn.active {
+    background: rgba(var(--accent-rgb), 0.15);
+    color: var(--accent);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  // Dynamic client filtering
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const searchInput = document.getElementById('projectSearch') as HTMLInputElement | null;
+  const cards = document.querySelectorAll('.project-card') as NodeListOf<HTMLElement>;
+  const noResultsMsg = document.getElementById('noResultsMsg');
+
+  let activeCategory = 'all';
+  let searchTerm = '';
+
+  function applyFilters() {
+    let visibleCount = 0;
+    cards.forEach((card) => {
+      const cardCategory = card.getAttribute('data-category') || '';
+      const cardTitle = card.getAttribute('data-title') || '';
+      const cardTech = card.getAttribute('data-tech') || '';
+
+      const matchesCat = activeCategory === 'all' || cardCategory.toLowerCase() === activeCategory.toLowerCase();
+      const matchesSearch = !searchTerm || cardTitle.includes(searchTerm) || cardTech.includes(searchTerm);
+
+      if (matchesCat && matchesSearch) {
+        card.style.display = 'flex';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (noResultsMsg) {
+      noResultsMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+  }
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCategory = btn.getAttribute('data-category') || 'all';
+      applyFilters();
+    });
+  });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchTerm = (e.target as HTMLInputElement).value.toLowerCase().trim();
+      applyFilters();
+    });
+  }
+</script>

@@ -1,0 +1,35 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <p style="font-weight: 600; color: var(--fg-default); margin-bottom: 0.25rem;">
+        NetSpace Software Solutions
+      </p>
+      <p style="font-size: 0.8rem; color: var(--fg-subtle);">
+        High-performance web, mobile & cloud systems. Built with Astro, PHP & MySQL.
+      </p>
+    </div>
+
+    <ul class="footer-links">
+      <li><a href="/" class="footer-link">Home</a></li>
+      <li><a href="/about" class="footer-link">About</a></li>
+      <li><a href="/services" class="footer-link">Services</a></li>
+      <li><a href="/projects" class="footer-link">Projects</a></li>
+      <li><a href="/blog" class="footer-link">Blog</a></li>
+      <li><a href="/contact" class="footer-link">Contact</a></li>
+      <li>
+        <a href="http://localhost/netspacedev/admin/" target="_blank" class="footer-link" style="color: var(--accent);">
+          Admin Console
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; font-size: 0.78rem; color: var(--fg-subtle);">
+    <p>&copy; {currentYear} NetSpace Dev. All rights reserved.</p>
+    <p>Theme inspired by <code>astro-narrow</code> • Hosted on Hostinger</p>
+  </div>
+</footer>

@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { fetchBlogs } from '../utils/api.js';
+
+const blogs = await fetchBlogs();
+---
+
+<BaseLayout title="Engineering Articles & Blog" description="Technical articles, system architecture breakdowns, and web engineering insights from NetSpace.">
+  <div style="padding: 2.5rem 0;">
+    <div class="hero-pill">
+      <span>Tech Insights</span>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem;">
+      <div>
+        <h1 style="font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem;">
+          Engineering & Insights
+        </h1>
+        <p style="font-size: 1.05rem; color: var(--fg-muted); max-width: 36rem;">
+          Deep dives into software architecture, Astro performance, PHP 8.4 REST services, and cloud engineering.
+        </p>
+      </div>
+
+      <a href="http://localhost/netspacedev/admin/blog-edit.php" target="_blank" class="btn btn-outline" style="font-size: 0.85rem; padding: 0.5rem 0.9rem;">
+        + Write Article (PIN: 1234)
+      </a>
+    </div>
+
+    <!-- Articles List (astro-narrow compact card aesthetic) -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      {blogs.map((b) => (
+        <article class="compact-card blog-item" id={b.slug} style="padding: 1.75rem;">
+          <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start;">
+            {b.cover_image ? (
+              <img 
+                src={b.cover_image} 
+                alt={b.title} 
+                style="width: 220px; height: 140px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); flex-shrink: 0;"
+                loading="lazy" 
+              />
+            ) : null}
+
+            <div style="flex: 1; min-width: 260px;">
+              <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; font-size: 0.78rem;">
+                <span class="card-category" style="margin-bottom: 0;">{b.category || 'Engineering'}</span>
+                <span style="color: var(--fg-subtle);">•</span>
+                <span style="color: var(--fg-muted);">{b.read_time || '5 min read'}</span>
+                {b.created_at ? (
+                  <>
+                    <span style="color: var(--fg-subtle);">•</span>
+                    <span style="color: var(--fg-muted);">{new Date(b.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                  </>
+                ) : null}
+              </div>
+
+              <h2 class="card-title" style="font-size: 1.35rem; margin-bottom: 0.75rem;">
+                {b.title}
+              </h2>
+
+              <p class="card-summary" style="margin-bottom: 1rem;">
+                {b.excerpt}
+              </p>
+
+              <!-- Expandable Article Content Section -->
+              {b.content ? (
+                <details style="margin-top: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
+                  <summary style="cursor: pointer; color: var(--accent); font-weight: 600; font-size: 0.9rem; user-select: none;">
+                    Read Full Article ↓
+                  </summary>
+                  <div style="margin-top: 1rem; font-size: 0.92rem; line-height: 1.75; color: var(--fg-default); white-space: pre-line; background: rgba(0,0,0,0.15); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                    {b.content}
+                  </div>
+                </details>
+              ) : null}
+
+              <div class="card-meta" style="margin-top: 1rem;">
+                <span>Author: <strong>{b.author || 'Kasun Perera'}</strong></span>
+                {b.tags ? (
+                  <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--fg-subtle);">
+                    Tags: {b.tags}
+                  </span>
+                ) : null}
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

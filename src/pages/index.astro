@@ -1,0 +1,185 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { fetchProjects, fetchBlogs } from '../utils/api.js';
+
+const allProjects = await fetchProjects();
+const featuredProjects = allProjects.filter((p) => p.is_featured === 1 || p.is_featured === true).slice(0, 3);
+const recentBlogs = (await fetchBlogs()).slice(0, 2);
+
+const services = [
+  {
+    title: 'Custom Web Applications',
+    desc: 'High-performance cloud platforms, dashboards, and enterprise portals engineered for speed, security, and scalability.',
+    icon: '💻'
+  },
+  {
+    title: 'Mobile App Development',
+    desc: 'Cross-platform iOS and Android mobile experiences engineered with native performance and smooth micro-interactions.',
+    icon: '📱'
+  },
+  {
+    title: 'Cloud & API Architecture',
+    desc: 'Microservices, Dockerized deployments, REST & GraphQL APIs, and robust MySQL/PostgreSQL database engineering.',
+    icon: '⚡'
+  },
+  {
+    title: 'AI & Workflow Automation',
+    desc: 'Intelligent decision support systems, computer vision, data extraction pipelines, and automated business workflows.',
+    icon: '🧠'
+  }
+];
+
+const techStack = [
+  'Astro', 'React', 'Vue', 'Node.js', 'PHP 8.4', 'MySQL', 'PostgreSQL', 'Docker', 'AWS', 'TypeScript', 'TailwindCSS'
+];
+---
+
+<BaseLayout title="Software Development Company">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-pill">
+      <span class="hero-pill-dot"></span>
+      <span>Available for New Client Projects</span>
+    </div>
+
+    <h1 class="hero-title">
+      Engineering high-impact <br />
+      <span class="hero-gradient-text">digital software platforms</span>.
+    </h1>
+
+    <p class="hero-lead">
+      NetSpace is a boutique software development studio. We design and build resilient web applications, mobile platforms, and cloud backends tailored for ambitious companies and forward-thinking startups.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="/contact" class="btn btn-primary">
+        Start a Project ➔
+      </a>
+      <a href="/projects" class="btn btn-outline">
+        Explore Portfolio
+      </a>
+    </div>
+
+    <!-- Tech Stack Pill Row -->
+    <div style="margin-top: 1rem;">
+      <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--fg-subtle); margin-bottom: 0.6rem;">
+        Core Engineering Stack
+      </p>
+      <div class="tech-badges-row">
+        {techStack.map((tech) => (
+          <span class="tech-badge">{tech}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Preview Section -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">What We Build</h2>
+        <p class="section-subtitle">Full-cycle software engineering capabilities</p>
+      </div>
+      <a href="/services" class="section-link">All Services →</a>
+    </div>
+
+    <div class="services-grid">
+      {services.map((s) => (
+        <div class="service-box">
+          <div class="service-icon" style="font-size: 1.3rem;">
+            {s.icon}
+          </div>
+          <h3 class="service-title">{s.title}</h3>
+          <p class="service-desc">{s.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Featured Projects Section -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">Recent systems engineered for our clients</p>
+      </div>
+      <a href="/projects" class="section-link">View All Portfolio ({allProjects.length}) →</a>
+    </div>
+
+    <div class="card-grid" id="featuredProjectsContainer">
+      {featuredProjects.map((p) => (
+        <article class="compact-card">
+          <img 
+            src={p.image_url || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80'} 
+            alt={p.title} 
+            class="card-thumb" 
+            loading="lazy" 
+          />
+          <div class="card-category">{p.category}</div>
+          <h3 class="card-title">
+            <a href={`/projects#${p.slug}`}>{p.title}</a>
+          </h3>
+          <p class="card-summary">{p.summary}</p>
+          
+          <div class="card-meta">
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--fg-muted);">
+              {p.technologies ? p.technologies.split(',').slice(0, 2).join(' • ') : 'Full Stack'}
+            </span>
+            {p.live_url ? (
+              <a href={p.live_url} target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600;">
+                Live Demo ↗
+              </a>
+            ) : (
+              <span style="color: var(--fg-subtle);">Case Study</span>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Latest Engineering Articles -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Engineering Insights</h2>
+        <p class="section-subtitle">Technical writing, architecture breakdowns, and learnings</p>
+      </div>
+      <a href="/blog" class="section-link">All Articles →</a>
+    </div>
+
+    <div class="card-grid">
+      {recentBlogs.map((b) => (
+        <article class="compact-card">
+          <div class="card-category">{b.category}</div>
+          <h3 class="card-title">
+            <a href={`/blog#${b.slug}`}>{b.title}</a>
+          </h3>
+          <p class="card-summary">{b.excerpt}</p>
+          
+          <div class="card-meta">
+            <span>By {b.author || 'NetSpace'}</span>
+            <span>{b.read_time || '5 min read'}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Call to Action Banner -->
+  <section class="section" style="padding-bottom: 4rem;">
+    <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 3rem 2rem; text-align: center; position: relative; overflow: hidden;">
+      <div style="position: absolute; top: -50px; right: -50px; width: 160px; height: 160px; background: rgba(var(--accent-rgb), 0.15); filter: blur(40px); border-radius: 50%;"></div>
+      
+      <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.75rem;">
+        Have a project in mind?
+      </h2>
+      <p style="color: var(--fg-muted); max-width: 32rem; margin: 0 auto 1.75rem; font-size: 1.05rem;">
+        Let's discuss your requirements and build a high-performance software solution together.
+      </p>
+      <a href="/contact" class="btn btn-primary" style="padding: 0.8rem 2rem;">
+        Get in Touch With Us
+      </a>
+    </div>
+  </section>
+</BaseLayout>

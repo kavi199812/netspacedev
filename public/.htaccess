@@ -1,0 +1,28 @@
+# Apache configuration for Hostinger (public_html)
+Options -Indexes
+ServerSignature Off
+
+# Enable Rewrite Engine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Allow direct access to admin, api, uploads, and existing files
+    RewriteCond %{REQUEST_URI} ^/admin [OR]
+    RewriteCond %{REQUEST_URI} ^/api [OR]
+    RewriteCond %{REQUEST_URI} ^/uploads [OR]
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Clean URLs for static Astro pages
+    RewriteCond %{REQUEST_FILENAME}.html -f
+    RewriteRule ^(.*)$ $1.html [L]
+</IfModule>
+
+# Security: Prevent executing scripts in uploads folder
+<IfModule mod_authz_core.c>
+    <FilesMatch "\.(php|php5|php7|php8|phtml|phar)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
