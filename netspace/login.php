@@ -79,49 +79,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             transform: scale(1.05);
         }
 
-        .pin-keypad {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            max-width: 260px;
-            margin: 20px auto 0;
-        }
-
-        .key-btn {
-            background: var(--bg-main);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            font-size: 1.25rem;
-            font-weight: 600;
-            padding: 14px;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: all 0.15s ease;
-            user-select: none;
-        }
-
-        .key-btn:hover {
-            background: var(--bg-card-hover);
-            border-color: #484f58;
-            transform: translateY(-1px);
-        }
-
-        .key-btn:active {
-            transform: translateY(1px);
-            background: var(--border);
-        }
-
-        .key-btn.backspace {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
     </style>
 </head>
 <body class="login-wrap">
 
-<div class="login-card" style="text-align: center; max-width: 380px;">
-    <div class="login-header" style="margin-bottom: 1.2rem;">
-        <div class="brand-logo-icon" style="margin: 0 auto 14px; width: 56px; height: 56px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); padding: 8px; display: grid; place-items: center; border-radius: var(--radius-md);">
+<div class="login-card" style="text-align: center; max-width: 360px;">
+    <div class="login-header" style="margin-bottom: 1.5rem;">
+        <div class="brand-logo-icon" style="margin: 0 auto 16px; width: 64px; height: 64px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); padding: 10px; display: grid; place-items: center; border-radius: var(--radius-md);">
             <img src="assets/logo-white.png" alt="NetSpace" style="width: 100%; height: 100%; object-fit: contain;">
         </div>
         <h1>Enter Security PIN</h1>
@@ -129,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <?php if (!empty($error)): ?>
-        <div class="alert alert-error" style="text-align: left; padding: 0.6rem 0.9rem; font-size: 0.88rem;">
+        <div class="alert alert-error" style="text-align: left; padding: 0.6rem 0.9rem; font-size: 0.88rem; margin-bottom: 1.25rem;">
             <?= htmlspecialchars($error) ?>
         </div>
     <?php endif; ?>
@@ -137,34 +101,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="POST" action="login.php" id="pinForm">
         <input type="hidden" name="pin" id="fullPin" value="">
 
-        <div class="pin-wrapper">
+        <div class="pin-wrapper" style="margin-bottom: 1.5rem;">
             <input type="password" inputmode="numeric" maxlength="1" class="pin-digit" id="d1" autofocus required autocomplete="off">
             <input type="password" inputmode="numeric" maxlength="1" class="pin-digit" id="d2" required autocomplete="off">
             <input type="password" inputmode="numeric" maxlength="1" class="pin-digit" id="d3" required autocomplete="off">
             <input type="password" inputmode="numeric" maxlength="1" class="pin-digit" id="d4" required autocomplete="off">
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem; font-size: 0.95rem;">
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem; font-size: 0.95rem; font-weight: 600;">
             Unlock Console ➔
         </button>
 
-        <!-- On-Screen Numeric Keypad -->
-        <div class="pin-keypad">
-            <button type="button" class="key-btn" onclick="pressKey('1')">1</button>
-            <button type="button" class="key-btn" onclick="pressKey('2')">2</button>
-            <button type="button" class="key-btn" onclick="pressKey('3')">3</button>
-            <button type="button" class="key-btn" onclick="pressKey('4')">4</button>
-            <button type="button" class="key-btn" onclick="pressKey('5')">5</button>
-            <button type="button" class="key-btn" onclick="pressKey('6')">6</button>
-            <button type="button" class="key-btn" onclick="pressKey('7')">7</button>
-            <button type="button" class="key-btn" onclick="pressKey('8')">8</button>
-            <button type="button" class="key-btn" onclick="pressKey('9')">9</button>
-            <button type="button" class="key-btn backspace" onclick="pressClear()">CLR</button>
-            <button type="button" class="key-btn" onclick="pressKey('0')">0</button>
-            <button type="button" class="key-btn backspace" onclick="pressBackspace()">⌫</button>
-        </div>
-
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1.5rem;">
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1.5rem; margin-bottom: 0;">
             Default PIN: <strong style="color: var(--accent); letter-spacing: 0.1em;">1234</strong>
         </p>
     </form>
@@ -219,36 +167,6 @@ inputs.forEach((input, index) => {
         }
     });
 });
-
-function pressKey(num) {
-    for (let i = 0; i < inputs.length; i++) {
-        if (!inputs[i].value) {
-            inputs[i].value = num;
-            if (i < inputs.length - 1) {
-                inputs[i + 1].focus();
-            }
-            updateHiddenPin();
-            break;
-        }
-    }
-}
-
-function pressBackspace() {
-    for (let i = inputs.length - 1; i >= 0; i--) {
-        if (inputs[i].value) {
-            inputs[i].value = '';
-            inputs[i].focus();
-            updateHiddenPin();
-            break;
-        }
-    }
-}
-
-function pressClear() {
-    inputs.forEach(i => i.value = '');
-    inputs[0].focus();
-    updateHiddenPin();
-}
 </script>
 
 </body>
