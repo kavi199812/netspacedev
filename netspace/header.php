@@ -8,6 +8,7 @@ $pdo = getDBConnection();
 $unreadCount = (int)$pdo->query("SELECT COUNT(*) FROM messages WHERE is_read = 0")->fetchColumn();
 $currentScript = basename($_SERVER['PHP_SELF']);
 $flash = getFlash();
+$frontendUrl = getenv('SITE_URL') ?: '../';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,7 +62,7 @@ $flash = getFlash();
         </ul>
 
         <div class="user-actions">
-            <a href="http://localhost:4321/" target="_blank" class="btn-view-site" title="Preview Astro Frontend">
+            <a href="<?= htmlspecialchars($frontendUrl) ?>" target="_blank" class="btn-view-site" title="Visit Live Website">
                 <span>View Site ↗</span>
             </a>
             <a href="logout.php" class="btn-logout" onclick="return confirm('Are you sure you want to log out?');">
