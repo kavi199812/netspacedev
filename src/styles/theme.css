@@ -129,13 +129,38 @@ a {
 .brand-icon-box {
   width: 32px;
   height: 32px;
-  background-color: var(--accent);
-  color: var(--accent-contrast);
+  background-color: #f0f6fc;
   border-radius: var(--radius-xs);
   display: grid;
   place-items: center;
-  font-weight: 800;
-  font-size: 1rem;
+  padding: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.brand-icon-box .brand-logo-dark {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: block;
+}
+
+.brand-icon-box .brand-logo-light {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: none;
+}
+
+[data-theme="light"] .brand-icon-box {
+  background-color: #0f172a;
+}
+
+[data-theme="light"] .brand-icon-box .brand-logo-dark {
+  display: none;
+}
+
+[data-theme="light"] .brand-icon-box .brand-logo-light {
+  display: block;
 }
 
 .nav-primary {
