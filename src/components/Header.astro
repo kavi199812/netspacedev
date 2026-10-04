@@ -35,7 +35,7 @@ const navItems = [
       ))}
     </nav>
 
-    <!-- Actions: Theme Toggle, Admin Console Link, Mobile Toggle -->
+    <!-- Actions: Theme Toggle, Mobile Toggle -->
     <div class="nav-actions">
       <!-- Theme Toggle Button -->
       <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark/light theme" title="Toggle theme">
@@ -47,11 +47,6 @@ const navItems = [
           <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
         </svg>
       </button>
-
-      <!-- Admin Console shortcut (PIN login) -->
-      <a href="http://localhost/netspacedev/admin/" target="_blank" class="admin-link-btn" title="Open Admin Console (4-digit PIN)">
-        <span>Admin 🔐</span>
-      </a>
 
       <!-- Mobile Menu Button -->
       <button type="button" class="mobile-toggle" id="mobileMenuBtn" aria-label="Toggle navigation menu">
@@ -75,9 +70,6 @@ const navItems = [
         {item.label}
       </a>
     ))}
-    <a href="http://localhost/netspacedev/admin/" target="_blank" class="nav-item" style="color: var(--accent); font-weight: 600; padding: 0.65rem 1rem;">
-      Admin Console (PIN: 1234) 🔐
-    </a>
   </div>
 </div>
 
