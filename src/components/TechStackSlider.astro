@@ -209,36 +209,38 @@ const duplicatedStacks = [...techStacks, ...techStacks];
 
   .marquee-track {
     display: flex;
-    gap: 0.65rem;
+    gap: 0.75rem;
     width: max-content;
-    animation: scroll-left 28s linear infinite;
+    animation: scroll-left 45s linear infinite;
   }
 
   .marquee-wrapper:hover .marquee-track {
     animation-play-state: paused;
   }
 
-  /* Exact border-radius and styling matching .pill-btn (WhatsApp button) */
+  /* Exact border-radius and styling matching .pill-btn with translucent glass look */
   .tech-pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.55rem;
     padding: 0.5rem 0.95rem;
-    background-color: var(--muted);
-    border: 1px solid var(--border);
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border-radius: var(--radius-xs);
     font-size: var(--step--1);
     font-weight: 500;
     color: var(--fg);
     white-space: nowrap;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
     user-select: none;
     cursor: default;
   }
 
   .tech-pill:hover {
-    background-color: var(--accent-bg, rgba(255, 255, 255, 0.05));
-    border-color: var(--border-strong, #3b4252);
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-1px);
   }
 
