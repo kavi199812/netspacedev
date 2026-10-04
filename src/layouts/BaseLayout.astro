@@ -11,8 +11,12 @@ interface Props {
 
 const { 
   title, 
-  description = "NetSpace - A clean and minimal software engineering studio. Writing, projects, and systems." 
+  description = "NetSpace Dev - Modern software engineering studio. Cloud architecture, enterprise systems, and high-performance digital products." 
 } = Astro.props;
+
+const fullTitle = title === 'NetSpace Dev' || !title 
+  ? 'NetSpace Dev' 
+  : `${title} | NetSpace Dev`;
 
 const currentPath = Astro.url.pathname;
 ---
@@ -25,9 +29,9 @@ const currentPath = Astro.url.pathname;
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="generator" content={Astro.generator} />
   
-  <title>{title} | NetSpace Dev</title>
+  <title>{fullTitle}</title>
   <meta name="description" content={description} />
-  <meta property="og:title" content={`${title} | NetSpace Dev`} />
+  <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
 
   <!-- Prevent Theme Flash -->
