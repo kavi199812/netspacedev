@@ -1,83 +1,48 @@
 <?php
 $pageTitle = 'Settings & Logo Branding';
 require_once __DIR__ . '/header.php';
+require_once __DIR__ . '/logo_helper.php';
 
 $error = '';
 $adminId = $_SESSION['admin_id'] ?? 1;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verifyCsrfToken($_POST['csrf_token'] ?? '')) {
-        $error = 'Invalid security token.';
+        $error = 'Invalid security token. Please refresh and try again.';
     } else {
         $formAction = $_POST['action'] ?? '';
 
         // Handle Logo Upload
         if ($formAction === 'upload_logo') {
-            if (empty($_FILES['logo_file']['name']) || $_FILES['logo_file']['error'] !== UPLOAD_ERR_OK) {
-                $error = 'Please select a valid logo file to upload.';
+            if (!isset($_FILES['logo_file']) || $_FILES['logo_file']['error'] === UPLOAD_ERR_NO_FILE) {
+                $error = 'Please select a logo file before clicking upload.';
+            } elseif ($_FILES['logo_file']['error'] !== UPLOAD_ERR_OK) {
+                $uploadErrors = [
+                    UPLOAD_ERR_INI_SIZE   => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
+                    UPLOAD_ERR_FORM_SIZE  => 'The uploaded file exceeds the MAX_FILE_SIZE directive in the HTML form.',
+                    UPLOAD_ERR_PARTIAL    => 'The uploaded file was only partially uploaded.',
+                    UPLOAD_ERR_NO_TMP_DIR => 'Missing a temporary folder on the server.',
+                    UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk.',
+                    UPLOAD_ERR_EXTENSION  => 'A PHP extension stopped the file upload.'
+                ];
+                $error = $uploadErrors[$_FILES['logo_file']['error']] ?? 'File upload error code: ' . $_FILES['logo_file']['error'];
             } else {
                 $file = $_FILES['logo_file'];
                 $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
                 $allowed = ['png', 'jpg', 'jpeg', 'webp', 'svg'];
 
                 if (!in_array($ext, $allowed, true)) {
-                    $error = 'Allowed logo formats: PNG, JPG, WebP, SVG.';
-                } elseif ($file['size'] > 5 * 1024 * 1024) {
-                    $error = 'Logo file size cannot exceed 5MB.';
+                    $error = 'Invalid file format. Allowed formats: PNG, JPG, WebP, SVG.';
+                } elseif ($file['size'] > 8 * 1024 * 1024) {
+                    $error = 'File size is too large (maximum 8MB allowed).';
                 } else {
-                    $targetDir = __DIR__ . '/../public';
-                    $targetLogo = $targetDir . '/logo.png';
-                    
-                    if (move_uploaded_file($file['tmp_name'], $targetLogo)) {
-                        // Automatically generate transparent white & dark variants if GD is available
-                        if (extension_loaded('gd') && $ext !== 'svg') {
-                            $src = @imagecreatefromstring(file_get_contents($targetLogo));
-                            if ($src) {
-                                $w = imagesx($src);
-                                $h = imagesy($src);
-
-                                $darkLogo = imagecreatetruecolor($w, $h);
-                                imagealphablending($darkLogo, false);
-                                imagesavealpha($darkLogo, true);
-                                $trans = imagecolorallocatealpha($darkLogo, 0, 0, 0, 127);
-                                imagefill($darkLogo, 0, 0, $trans);
-
-                                $lightLogo = imagecreatetruecolor($w, $h);
-                                imagealphablending($lightLogo, false);
-                                imagesavealpha($lightLogo, true);
-                                imagefill($lightLogo, 0, 0, $trans);
-
-                                for ($x = 0; $x < $w; $x++) {
-                                    for ($y = 0; $y < $h; $y++) {
-                                        $rgb = imagecolorat($src, $x, $y);
-                                        $r = ($rgb >> 16) & 0xFF;
-                                        $g = ($rgb >> 8) & 0xFF;
-                                        $b = $rgb & 0xFF;
-                                        $bright = ($r + $g + $b) / 3;
-
-                                        if ($bright < 210) {
-                                            $alpha = (int)(($bright / 210) * 127);
-                                            $wCol = imagecolorallocatealpha($darkLogo, 240, 246, 252, $alpha);
-                                            imagesetpixel($darkLogo, $x, $y, $wCol);
-
-                                            $bCol = imagecolorallocatealpha($lightLogo, 15, 23, 42, $alpha);
-                                            imagesetpixel($lightLogo, $x, $y, $bCol);
-                                        }
-                                    }
-                                }
-                                imagepng($darkLogo, $targetDir . '/logo-white.png');
-                                imagepng($lightLogo, $targetDir . '/logo-dark.png');
-                            }
-                        }
-
-                        // Also update uploads folder copy
-                        @copy($targetLogo, $targetDir . '/uploads/logo.png');
-
-                        setFlash('success', 'Company logo updated successfully!');
+                    try {
+                        processAndSaveLogo($file['tmp_name'], $ext);
+                        setFlash('success', 'Company logo successfully uploaded and updated across all pages!');
                         header('Location: settings.php');
                         exit;
-                    } else {
-                        $error = 'Failed to save uploaded logo file.';
+                    } catch (Exception $e) {
+                        $error = 'Failed to process logo: ' . $e->getMessage();
                     }
                 }
             }
@@ -114,6 +79,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $stmt = $pdo->prepare("SELECT username, email, name, pin_code, created_at FROM admins WHERE id = ? LIMIT 1");
 $stmt->execute([$adminId]);
 $admin = $stmt->fetch();
+
+$cacheBuster = time();
+$logoWhiteExists = file_exists(__DIR__ . '/assets/logo-white.png');
+$logoDarkExists  = file_exists(__DIR__ . '/assets/logo-dark.png');
+$logoOrigExists  = file_exists(__DIR__ . '/assets/logo.png');
 ?>
 
 <div class="page-head">
@@ -133,7 +103,7 @@ $admin = $stmt->fetch();
         Company Logo
     </h2>
     <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem;">
-        Upload your official company logo. It will be automatically updated across the website header, hero avatar, favicon, and admin console.
+        Upload your official company logo. It will automatically update across the website header, hero avatar, favicon, and admin console.
     </p>
 
     <!-- Logo Previews -->
@@ -141,21 +111,33 @@ $admin = $stmt->fetch();
         <div>
             <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em;">Dark Mode Preview</div>
             <div style="width: 110px; height: 110px; background-color: #0c0f14; border: 1px solid var(--border); border-radius: var(--radius-md); display: grid; place-items: center; padding: 12px;">
-                <img src="../logo-white.png?v=<?= time() ?>" alt="Logo Dark Preview" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                <?php if ($logoWhiteExists): ?>
+                    <img src="assets/logo-white.png?v=<?= $cacheBuster ?>" alt="Dark Preview" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                <?php else: ?>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">No Preview</span>
+                <?php endif; ?>
             </div>
         </div>
 
         <div>
             <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em;">Light Mode Preview</div>
             <div style="width: 110px; height: 110px; background-color: #ffffff; border: 1px solid var(--border); border-radius: var(--radius-md); display: grid; place-items: center; padding: 12px;">
-                <img src="../logo-dark.png?v=<?= time() ?>" alt="Logo Light Preview" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                <?php if ($logoDarkExists): ?>
+                    <img src="assets/logo-dark.png?v=<?= $cacheBuster ?>" alt="Light Preview" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                <?php else: ?>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">No Preview</span>
+                <?php endif; ?>
             </div>
         </div>
 
         <div>
             <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em;">Original Upload</div>
             <div style="width: 110px; height: 110px; background-color: #12161f; border: 1px solid var(--border); border-radius: var(--radius-md); display: grid; place-items: center; padding: 12px;">
-                <img src="../logo.png?v=<?= time() ?>" alt="Logo Original" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                <?php if ($logoOrigExists): ?>
+                    <img src="assets/logo.png?v=<?= $cacheBuster ?>" alt="Original Upload" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                <?php else: ?>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">No Preview</span>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -168,7 +150,7 @@ $admin = $stmt->fetch();
         <div class="form-group">
             <label class="form-label" for="logo_file">Select New Logo Image</label>
             <input type="file" id="logo_file" name="logo_file" class="form-control" accept="image/png, image/jpeg, image/webp, image/svg+xml" required>
-            <p class="form-help">Supported formats: PNG, JPG, WebP, SVG. Recommended minimum dimensions: 512 x 512 px.</p>
+            <p class="form-help">Supported formats: PNG, JPG, WebP, SVG. Recommended square image (e.g. 512 x 512 px or higher).</p>
         </div>
 
         <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">
