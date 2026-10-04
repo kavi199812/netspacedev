@@ -3,11 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const principles = [
   {
-    title: 'Performance-First Architecture',
-    desc: 'We reject bloated frameworks and slow runtimes. Every line of code is structured to load fast, execute cleanly, and respect hardware constraints.'
+    title: 'Performance-First',
+    desc: 'We reject bloated frameworks and slow runtimes. Every line of code is structured to load fast and execute cleanly.'
   },
   {
-    title: 'Security & Integrity',
+    title: 'Reliable Backend Logic',
     desc: 'From parameterized SQL queries and CSRF tokens to robust authentication mechanisms, security is built into our software from day one.'
   },
   {
@@ -15,70 +15,45 @@ const principles = [
     desc: 'We build clear, modular systems that your internal teams can easily maintain, extend, and scale as your user base expands.'
   },
   {
-    title: 'Transparent Collaboration',
-    desc: 'Direct communication with software engineers, weekly demo iterations, clear Git versioning, and transparent delivery milestones.'
+    title: 'Transparent Delivery',
+    desc: 'Direct communication with software engineers, weekly demo iterations, and transparent delivery milestones.'
   }
 ];
 ---
 
-<BaseLayout title="About Us" description="Learn more about NetSpace, our software engineering culture, values, and client focus.">
-  <div style="padding: 2.5rem 0;">
-    <div class="hero-pill">
-      <span>Who We Are</span>
-    </div>
-
-    <h1 style="font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1.25rem;">
-      We engineer dependable software for <br />
-      <span class="hero-gradient-text">critical business operations</span>.
+<BaseLayout title="About Us">
+  <div style="margin-bottom: 2rem;">
+    <h1 style="font-size: var(--step-3); font-weight: 700; letter-spacing: -0.025em; margin-bottom: 0.5rem;">
+      About NetSpace
     </h1>
-
-    <p style="font-size: 1.1rem; color: var(--fg-muted); line-height: 1.7; margin-bottom: 2.5rem; max-width: 46rem;">
-      NetSpace was established to bridge the gap between complex software engineering and seamless user experiences. We are a dedicated software development company specializing in cloud platforms, bespoke web applications, and enterprise database integrations.
+    <p style="color: var(--fg-muted); font-size: var(--step-0);">
+      A boutique software development company based in Sri Lanka, engineering digital solutions worldwide.
     </p>
+  </div>
 
-    <!-- Engineering Principles -->
-    <div style="margin-top: 3rem;">
-      <h2 class="section-title" style="margin-bottom: 1.5rem;">Core Engineering Principles</h2>
-
-      <div class="card-grid">
-        {principles.map((p) => (
-          <div class="compact-card">
-            <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--fg-default);">
-              {p.title}
-            </h3>
-            <p style="font-size: 0.9rem; color: var(--fg-muted); line-height: 1.6;">
-              {p.desc}
-            </p>
-          </div>
-        ))}
-      </div>
+  <section class="profile-card" style="margin-bottom: 2rem;">
+    <h2 style="font-size: var(--step-1); font-weight: 600; margin-bottom: 0.75rem;">Company Overview</h2>
+    <p style="color: var(--fg-muted); font-size: var(--step--1); line-height: 1.7; margin-bottom: 1rem;">
+      NetSpace was established to build reliable software platforms that bridge complex database engineering with elegant, minimalist user interfaces. We specialize in PHP 8.4 REST services, MySQL/MariaDB database architecture, and ultra-fast Astro frontend delivery.
+    </p>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+      <span class="meta-tag">Astro v7</span>
+      <span class="meta-tag">PHP 8.4</span>
+      <span class="meta-tag">MySQL</span>
+      <span class="meta-tag">Docker</span>
+      <span class="meta-tag">Hostinger</span>
+      <span class="meta-tag">TailwindCSS</span>
     </div>
+  </section>
 
-    <!-- Tech Competencies -->
-    <div style="margin-top: 3.5rem; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 2rem;">
-      <h2 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 1rem;">
-        Technology Competencies
-      </h2>
-      <p style="font-size: 0.95rem; color: var(--fg-muted); line-height: 1.6; margin-bottom: 1.5rem;">
-        We leverage modern frontend tools like <strong>Astro, React, Vue</strong> combined with battle-tested backend powerhouses like <strong>PHP 8.4, Node.js, Go, MySQL, PostgreSQL, and Docker</strong>.
-      </p>
+  <h2 class="content-section-title" style="margin-bottom: 1rem;">Core Engineering Principles</h2>
 
-      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-        <span class="tech-badge" style="color: var(--accent);">Frontend: Astro, React, TypeScript, Tailwind</span>
-        <span class="tech-badge" style="color: var(--accent);">Backend: PHP 8.4 (PDO), Node.js, Go, Python</span>
-        <span class="tech-badge" style="color: var(--accent);">Data: MySQL, PostgreSQL, Redis</span>
-        <span class="tech-badge" style="color: var(--accent);">Deployment: Hostinger, Apache, Nginx, Docker, AWS</span>
-      </div>
-    </div>
-
-    <!-- CTA -->
-    <div style="margin-top: 3.5rem; text-align: center;">
-      <p style="font-size: 1.1rem; color: var(--fg-muted); margin-bottom: 1rem;">
-        Interested in partnering with us on your next release?
-      </p>
-      <a href="/contact" class="btn btn-primary">
-        Talk to an Engineer ➔
-      </a>
-    </div>
+  <div class="cards-list">
+    {principles.map((p) => (
+      <article class="entry-card" style="padding: 1.25rem 1.5rem;">
+        <h3 class="entry-card-title" style="font-size: var(--step-0); margin-bottom: 0.4rem;">{p.title}</h3>
+        <p class="entry-card-desc" style="-webkit-line-clamp: none;">{p.desc}</p>
+      </article>
+    ))}
   </div>
 </BaseLayout>

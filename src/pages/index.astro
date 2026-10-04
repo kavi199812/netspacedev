@@ -3,182 +3,149 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { fetchProjects, fetchBlogs } from '../utils/api.js';
 
 const allProjects = await fetchProjects();
-const featuredProjects = allProjects.filter((p) => p.is_featured === 1 || p.is_featured === true).slice(0, 3);
-const recentBlogs = (await fetchBlogs()).slice(0, 2);
-
-const services = [
-  {
-    title: 'Custom Web Applications',
-    desc: 'High-performance cloud platforms, dashboards, and enterprise portals engineered for speed, security, and scalability.',
-    icon: '💻'
-  },
-  {
-    title: 'Mobile App Development',
-    desc: 'Cross-platform iOS and Android mobile experiences engineered with native performance and smooth micro-interactions.',
-    icon: '📱'
-  },
-  {
-    title: 'Cloud & API Architecture',
-    desc: 'Microservices, Dockerized deployments, REST & GraphQL APIs, and robust MySQL/PostgreSQL database engineering.',
-    icon: '⚡'
-  },
-  {
-    title: 'AI & Workflow Automation',
-    desc: 'Intelligent decision support systems, computer vision, data extraction pipelines, and automated business workflows.',
-    icon: '🧠'
-  }
-];
-
-const techStack = [
-  'Astro', 'React', 'Vue', 'Node.js', 'PHP 8.4', 'MySQL', 'PostgreSQL', 'Docker', 'AWS', 'TypeScript', 'TailwindCSS'
-];
+const featuredProjects = allProjects.slice(0, 2);
+const allBlogs = await fetchBlogs();
+const recentBlogs = allBlogs.slice(0, 2);
 ---
 
-<BaseLayout title="Software Development Company">
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-pill">
-      <span class="hero-pill-dot"></span>
-      <span>Available for New Client Projects</span>
-    </div>
-
-    <h1 class="hero-title">
-      Engineering high-impact <br />
-      <span class="hero-gradient-text">digital software platforms</span>.
-    </h1>
-
-    <p class="hero-lead">
-      NetSpace is a boutique software development studio. We design and build resilient web applications, mobile platforms, and cloud backends tailored for ambitious companies and forward-thinking startups.
-    </p>
-
-    <div class="hero-buttons">
-      <a href="/contact" class="btn btn-primary">
-        Start a Project ➔
-      </a>
-      <a href="/projects" class="btn btn-outline">
-        Explore Portfolio
-      </a>
-    </div>
-
-    <!-- Tech Stack Pill Row -->
-    <div style="margin-top: 1rem;">
-      <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--fg-subtle); margin-bottom: 0.6rem;">
-        Core Engineering Stack
-      </p>
-      <div class="tech-badges-row">
-        {techStack.map((tech) => (
-          <span class="tech-badge">{tech}</span>
-        ))}
+<BaseLayout title="Astro Narrow">
+  <!-- Profile Header Card (Exact Replica of User Screenshot) -->
+  <section class="profile-card">
+    <div class="profile-card-inner">
+      <!-- Circular Avatar / Logo -->
+      <div class="profile-avatar">
+        <svg width="48" height="48" viewBox="0 0 32 32" fill="none">
+          <rect width="32" height="32" rx="16" fill="#12161f"/>
+          <path d="M10 23V9L22 23V9" stroke="#f0f6fc" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
-    </div>
-  </section>
 
-  <!-- Services Preview Section -->
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <h2 class="section-title">What We Build</h2>
-        <p class="section-subtitle">Full-cycle software engineering capabilities</p>
-      </div>
-      <a href="/services" class="section-link">All Services →</a>
-    </div>
+      <!-- Info Details -->
+      <div class="profile-info">
+        <h1 class="profile-title">NetSpace Dev</h1>
+        <p class="profile-subtitle">A clean and minimal software development company</p>
+        <p class="profile-bio">
+          Writing, projects, and software systems — a compact space for digital ideas that keep their shape.
+        </p>
 
-    <div class="services-grid">
-      {services.map((s) => (
-        <div class="service-box">
-          <div class="service-icon" style="font-size: 1.3rem;">
-            {s.icon}
-          </div>
-          <h3 class="service-title">{s.title}</h3>
-          <p class="service-desc">{s.desc}</p>
+        <!-- Social Action Pills -->
+        <div class="profile-actions">
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="pill-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 .297c-6.63 0-12 5.373-12 12c0 5.303 3.438 9.8 8.205 11.385c.6.113.82-.258.82-.577c0-.285-.01-1.04-.015-2.04c-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729c1.205.084 1.838 1.236 1.838 1.236c1.07 1.835 2.809 1.305 3.495.998c.108-.776.417-1.305.76-1.605c-2.665-.3-5.466-1.332-5.466-5.93c0-1.31.465-2.38 1.235-3.22c-.135-.303-.54-1.523.105-3.176c0 0 1.005-.322 3.3 1.23c.96-.267 1.98-.399 3-.405c1.02.006 2.04.138 3 .405c2.28-1.552 3.285-1.23 3.285-1.23c.645 1.653.24 2.873.12 3.176c.765.84 1.23 1.91 1.23 3.22c0 4.61-2.805 5.625-5.475 5.92c.42.36.81 1.096.81 2.22c0 1.606-.015 2.896-.015 3.286c0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+            </svg>
+            <span>GitHub</span>
+          </a>
+
+          <a href="mailto:hello@netspacedev.com" class="pill-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+            <span>Email</span>
+          </a>
+
+          <a href="/contact" class="pill-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span>Contact</span>
+          </a>
         </div>
-      ))}
+      </div>
     </div>
   </section>
 
-  <!-- Featured Projects Section -->
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <h2 class="section-title">Featured Projects</h2>
-        <p class="section-subtitle">Recent systems engineered for our clients</p>
-      </div>
-      <a href="/projects" class="section-link">View All Portfolio ({allProjects.length}) →</a>
+  <!-- Recent Posts Section (Identical to Screenshot) -->
+  <section class="content-section">
+    <h2 class="content-section-title">Recent Posts</h2>
+
+    <div class="cards-list">
+      {recentBlogs.map((b, idx) => (
+        <article class="entry-card">
+          <a href={`/blog#${b.slug}`}>
+            <div class="entry-card-layout">
+              <div class="entry-card-body">
+                <h3 class="entry-card-title">{b.title}</h3>
+                <p class="entry-card-desc">{b.excerpt}</p>
+
+                <div class="entry-card-meta">
+                  <span class="meta-item">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+                    </svg>
+                    <time>{b.created_at ? new Date(b.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'June 27, 2026'}</time>
+                  </span>
+
+                  {b.tags && b.tags.split(',').slice(0, 2).map((t) => (
+                    <span class="meta-tag">#{t.trim()}</span>
+                  ))}
+                </div>
+              </div>
+
+              <!-- 16:9 Thumbnail on the right (like in screenshot) -->
+              {b.cover_image ? (
+                <div class="entry-card-thumb-wrap">
+                  <img src={b.cover_image} alt={b.title} class="entry-card-thumb" loading="lazy" />
+                </div>
+              ) : null}
+            </div>
+          </a>
+        </article>
+      ))}
     </div>
 
-    <div class="card-grid" id="featuredProjectsContainer">
+    <!-- Centered View All Pill Button -->
+    <div class="view-all-wrap">
+      <a href="/blog" class="view-all-btn">
+        <span>View all</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14m-7-7 7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Featured Projects Section (Same Exact Layout) -->
+  <section class="content-section">
+    <h2 class="content-section-title">Featured Projects</h2>
+
+    <div class="cards-list">
       {featuredProjects.map((p) => (
-        <article class="compact-card">
-          <img 
-            src={p.image_url || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80'} 
-            alt={p.title} 
-            class="card-thumb" 
-            loading="lazy" 
-          />
-          <div class="card-category">{p.category}</div>
-          <h3 class="card-title">
-            <a href={`/projects#${p.slug}`}>{p.title}</a>
-          </h3>
-          <p class="card-summary">{p.summary}</p>
-          
-          <div class="card-meta">
-            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--fg-muted);">
-              {p.technologies ? p.technologies.split(',').slice(0, 2).join(' • ') : 'Full Stack'}
-            </span>
-            {p.live_url ? (
-              <a href={p.live_url} target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600;">
-                Live Demo ↗
-              </a>
-            ) : (
-              <span style="color: var(--fg-subtle);">Case Study</span>
-            )}
-          </div>
+        <article class="entry-card">
+          <a href={`/projects#${p.slug}`}>
+            <div class="entry-card-layout">
+              <div class="entry-card-body">
+                <h3 class="entry-card-title">{p.title}</h3>
+                <p class="entry-card-desc">{p.summary}</p>
+
+                <div class="entry-card-meta">
+                  <span class="meta-item">
+                    <span class="meta-tag">{p.category}</span>
+                  </span>
+
+                  {p.technologies && p.technologies.split(',').slice(0, 2).map((tech) => (
+                    <span class="meta-tag">#{tech.trim()}</span>
+                  ))}
+                </div>
+              </div>
+
+              {p.image_url ? (
+                <div class="entry-card-thumb-wrap">
+                  <img src={p.image_url} alt={p.title} class="entry-card-thumb" loading="lazy" />
+                </div>
+              ) : null}
+            </div>
+          </a>
         </article>
       ))}
     </div>
-  </section>
 
-  <!-- Latest Engineering Articles -->
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <h2 class="section-title">Engineering Insights</h2>
-        <p class="section-subtitle">Technical writing, architecture breakdowns, and learnings</p>
-      </div>
-      <a href="/blog" class="section-link">All Articles →</a>
-    </div>
-
-    <div class="card-grid">
-      {recentBlogs.map((b) => (
-        <article class="compact-card">
-          <div class="card-category">{b.category}</div>
-          <h3 class="card-title">
-            <a href={`/blog#${b.slug}`}>{b.title}</a>
-          </h3>
-          <p class="card-summary">{b.excerpt}</p>
-          
-          <div class="card-meta">
-            <span>By {b.author || 'NetSpace'}</span>
-            <span>{b.read_time || '5 min read'}</span>
-          </div>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <!-- Call to Action Banner -->
-  <section class="section" style="padding-bottom: 4rem;">
-    <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 3rem 2rem; text-align: center; position: relative; overflow: hidden;">
-      <div style="position: absolute; top: -50px; right: -50px; width: 160px; height: 160px; background: rgba(var(--accent-rgb), 0.15); filter: blur(40px); border-radius: 50%;"></div>
-      
-      <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.75rem;">
-        Have a project in mind?
-      </h2>
-      <p style="color: var(--fg-muted); max-width: 32rem; margin: 0 auto 1.75rem; font-size: 1.05rem;">
-        Let's discuss your requirements and build a high-performance software solution together.
-      </p>
-      <a href="/contact" class="btn btn-primary" style="padding: 0.8rem 2rem;">
-        Get in Touch With Us
+    <div class="view-all-wrap">
+      <a href="/projects" class="view-all-btn">
+        <span>View all</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14m-7-7 7 7-7 7"/>
+        </svg>
       </a>
     </div>
   </section>

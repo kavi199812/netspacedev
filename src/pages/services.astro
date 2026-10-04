@@ -3,93 +3,63 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const services = [
   {
-    icon: '🌐',
-    title: 'Custom Web Application Development',
+    title: 'Custom Web Applications',
     tag: 'Web & SaaS',
-    desc: 'From responsive client portals to complex SaaS architectures. We deliver lightning-fast web applications built on Astro, React, and robust PHP/Node backends.',
-    features: ['Single Page & Static Islands Architecture', 'Dynamic Dashboards & Admin Panels', 'REST & GraphQL API Endpoints', 'Payment Gateway & CRM Integrations']
+    desc: 'High-performance cloud platforms, dashboards, and enterprise portals engineered for speed, security, and scalability.',
+    features: ['Islands Architecture for instant load speeds', 'Dynamic Database-Driven Dashboards', 'RESTful & GraphQL API Integration', 'Payment & CRM Workflows']
   },
   {
-    icon: '📱',
     title: 'Cross-Platform Mobile Apps',
     tag: 'iOS & Android',
     desc: 'Engaging, responsive mobile applications built for both iOS and Android platforms, featuring offline synchronization and push notifications.',
-    features: ['React Native / Hybrid Development', 'Native Hardware Integration (Camera, GPS, Bluetooth)', 'Offline-First Local Storage', 'Automated App Store Release Pipelines']
+    features: ['React Native / Hybrid Development', 'Native Camera, GPS & Bluetooth APIs', 'Offline-First Local Storage', 'Automated Store Pipelines']
   },
   {
-    icon: '🗄️',
-    title: 'Database Architecture & Backend Engineering',
+    title: 'Database Architecture & Backend',
     tag: 'PHP & MySQL',
     desc: 'Scalable data models, high-performance query optimization, and secure server-side logic using modern PHP 8.4 and MySQL/MariaDB.',
-    features: ['Relational Database Schema Design & Normalization', 'High-Speed Query Caching with Redis', 'Automated Backups & Migration Workflows', 'Strict Access Control & Data Encryption']
+    features: ['Relational Schema Design & Normalization', 'High-Speed Query Caching with Redis', 'Automated Backups & Migration Workflows', 'Strict Access Control & Data Encryption']
   },
   {
-    icon: '☁️',
     title: 'Cloud DevOps & Hosting Solutions',
     tag: 'Hostinger & Cloud',
     desc: 'Reliable deployment engineering ensuring zero downtime, SSL certificates, automated Git webhooks, and optimal CDN caching.',
-    features: ['Hostinger Shared, Cloud & VPS Deployment', 'Git CI/CD Pipeline Automation', 'Domain, DNS & HTTPS Security Configuration', 'Server Monitoring & Error Alerting']
+    features: ['Hostinger Shared, Cloud & VPS Deployment', 'Git CI/CD Pipeline Automation', 'Domain, DNS & HTTPS Security Configuration', 'Server Monitoring & Alerting']
   }
 ];
 ---
 
-<BaseLayout title="Software Services" description="Explore the software development, web app, mobile, and cloud services provided by NetSpace.">
-  <div style="padding: 2.5rem 0;">
-    <div class="hero-pill">
-      <span>Our Services</span>
-    </div>
-
-    <h1 style="font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1.25rem;">
-      Full-Lifecycle <br />
-      <span class="hero-gradient-text">Software Engineering</span>.
+<BaseLayout title="Services">
+  <div style="margin-bottom: 2rem;">
+    <h1 style="font-size: var(--step-3); font-weight: 700; letter-spacing: -0.025em; margin-bottom: 0.5rem;">
+      Services
     </h1>
-
-    <p style="font-size: 1.1rem; color: var(--fg-muted); line-height: 1.7; margin-bottom: 3rem; max-width: 44rem;">
-      We partner with you through every phase: from system architecture and interface prototyping to backend coding, deployment on Hostinger, and post-launch maintenance.
+    <p style="color: var(--fg-muted); font-size: var(--step-0);">
+      Full-lifecycle software engineering capabilities tailored for modern businesses.
     </p>
+  </div>
 
-    <!-- Services Grid -->
-    <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
-      {services.map((s) => (
-        <div class="compact-card" style="padding: 2rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
-            <span style="font-size: 2rem;">{s.icon}</span>
-            <span class="badge" style="background: rgba(var(--accent-rgb), 0.1); color: var(--accent); border: 1px solid rgba(var(--accent-rgb), 0.25);">
-              {s.tag}
-            </span>
-          </div>
-
-          <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">
-            {s.title}
-          </h2>
-
-          <p style="font-size: 0.92rem; color: var(--fg-muted); line-height: 1.65; margin-bottom: 1.5rem;">
-            {s.desc}
-          </p>
-
-          <ul style="list-style: none; margin-top: auto; border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
-            {s.features.map((f) => (
-              <li style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--fg-default); margin-bottom: 0.4rem;">
-                <span style="color: var(--accent); font-weight: 700;">✓</span>
-                <span>{f}</span>
-              </li>
-            ))}
-          </ul>
+  <div class="cards-list">
+    {services.map((s) => (
+      <article class="entry-card" style="padding: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+          <span class="meta-tag" style="color: var(--accent-text);">{s.tag}</span>
         </div>
-      ))}
-    </div>
 
-    <!-- CTA Section -->
-    <div style="margin-top: 4rem; text-align: center; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 3rem 2rem;">
-      <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.75rem;">
-        Need a custom solution tailored to your business?
-      </h2>
-      <p style="color: var(--fg-muted); max-width: 32rem; margin: 0 auto 1.5rem; font-size: 1rem;">
-        Get in touch to receive a comprehensive technical proposal and project estimate.
-      </p>
-      <a href="/contact" class="btn btn-primary">
-        Request Project Consultation ➔
-      </a>
-    </div>
+        <h2 class="entry-card-title" style="margin-bottom: 0.5rem;">{s.title}</h2>
+        <p class="entry-card-desc" style="-webkit-line-clamp: none; margin-bottom: 1.25rem;">
+          {s.desc}
+        </p>
+
+        <ul style="list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; border-top: 1px solid var(--border); padding-top: 1rem;">
+          {s.features.map((f) => (
+            <li style="display: flex; align-items: center; gap: 0.4rem; font-size: var(--step--1); color: var(--fg-muted);">
+              <span style="color: var(--accent-text);">✓</span>
+              <span>{f}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    ))}
   </div>
 </BaseLayout>

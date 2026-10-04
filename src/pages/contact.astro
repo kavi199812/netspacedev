@@ -2,95 +2,60 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Contact Us" description="Start a software project with NetSpace. Reach out to our engineering and design team.">
-  <div style="padding: 2.5rem 0;">
-    <div class="hero-pill">
-      <span>Get in Touch</span>
-    </div>
-
-    <h1 style="font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem;">
-      Let’s build something <br />
-      <span class="hero-gradient-text">extraordinary together</span>.
+<BaseLayout title="Contact">
+  <div style="margin-bottom: 2rem;">
+    <h1 style="font-size: var(--step-3); font-weight: 700; letter-spacing: -0.025em; margin-bottom: 0.5rem;">
+      Contact Us
     </h1>
-
-    <p style="font-size: 1.1rem; color: var(--fg-muted); line-height: 1.7; margin-bottom: 3rem; max-width: 44rem;">
-      Have a product to develop, a legacy platform to modernize, or an engineering challenge? Fill out the brief form below and our lead engineer will get back to you within 24 hours.
+    <p style="color: var(--fg-muted); font-size: var(--step-0);">
+      Send an inquiry for your software project or engineering requirements.
     </p>
+  </div>
 
-    <div class="contact-layout">
-      <!-- Contact Form -->
-      <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 2.25rem;">
-        <h2 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem;">
-          Send an Inquiry
-        </h2>
+  <section class="profile-card" style="margin-bottom: 2rem;">
+    <div id="contactAlert" style="display: none; padding: 0.75rem 1rem; border-radius: var(--radius-xs); margin-bottom: 1.25rem; font-size: var(--step--1);"></div>
 
-        <div id="contactAlert" style="display: none; padding: 0.85rem 1rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem; font-size: 0.9rem;"></div>
-
-        <form id="contactForm">
-          <div class="form-group">
-            <label class="form-label" for="name">Your Name *</label>
-            <input type="text" id="name" name="name" class="form-control" required placeholder="e.g. Dilshan Fernando" />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="email">Work Email *</label>
-            <input type="email" id="email" name="email" class="form-control" required placeholder="name@company.com" />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="subject">Project Type / Subject</label>
-            <select id="subject" name="subject" class="form-control">
-              <option value="Custom Web App Development">Custom Web App Development</option>
-              <option value="Mobile App (iOS / Android)">Mobile App (iOS / Android)</option>
-              <option value="Cloud Architecture & DevOps">Cloud Architecture & DevOps</option>
-              <option value="API & Backend Integration">API & Backend Integration</option>
-              <option value="General Inquiry">General Inquiry</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="message">Project Requirements / Message *</label>
-            <textarea id="message" name="message" class="form-control" required placeholder="Tell us about the project scope, timeline, and goals..."></textarea>
-          </div>
-
-          <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">
-            Send Inquiry ➔
-          </button>
-        </form>
-      </div>
-
-      <!-- Company Contact Details & Info -->
-      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-        <div class="compact-card">
-          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--fg-default);">
-            Office Location
-          </h3>
-          <p style="font-size: 0.92rem; color: var(--fg-muted); line-height: 1.6;">
-            NetSpace Software Development Studio<br />
-            Colombo / Remote Worldwide
-          </p>
+    <form id="contactForm">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+        <div>
+          <label style="display: block; font-size: var(--step--1); font-weight: 500; margin-bottom: 0.35rem; color: var(--fg);">Your Name *</label>
+          <input type="text" name="name" required placeholder="Dilshan Fernando" style="width: 100%; padding: 0.6rem 0.85rem; background: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-xs); color: var(--fg); font-size: var(--step--1); outline: none;" />
         </div>
-
-        <div class="compact-card">
-          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--fg-default);">
-            Direct Communication
-          </h3>
-          <p style="font-size: 0.92rem; color: var(--fg-muted); line-height: 1.6;">
-            Email: <a href="mailto:hello@netspacedev.com" style="color: var(--accent); font-weight: 600;">hello@netspacedev.com</a><br />
-            WhatsApp / Call: <span style="color: var(--fg-default);">+94 77 123 4567</span>
-          </p>
-        </div>
-
-        <div class="compact-card">
-          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--fg-default);">
-            Fast Response Guarantee
-          </h3>
-          <p style="font-size: 0.92rem; color: var(--fg-muted); line-height: 1.6;">
-            We evaluate every technical specification and NDA immediately. You will receive an initial architecture review within 24 business hours.
-          </p>
+        <div>
+          <label style="display: block; font-size: var(--step--1); font-weight: 500; margin-bottom: 0.35rem; color: var(--fg);">Work Email *</label>
+          <input type="email" name="email" required placeholder="name@company.com" style="width: 100%; padding: 0.6rem 0.85rem; background: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-xs); color: var(--fg); font-size: var(--step--1); outline: none;" />
         </div>
       </div>
-    </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; font-size: var(--step--1); font-weight: 500; margin-bottom: 0.35rem; color: var(--fg);">Subject / Service</label>
+        <select name="subject" style="width: 100%; padding: 0.6rem 0.85rem; background: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-xs); color: var(--fg); font-size: var(--step--1); outline: none;">
+          <option value="Custom Web App Development">Custom Web App Development</option>
+          <option value="Mobile App (iOS / Android)">Mobile App (iOS / Android)</option>
+          <option value="Cloud Architecture & DevOps">Cloud Architecture & DevOps</option>
+          <option value="Backend & Database Engineering">Backend & Database Engineering</option>
+          <option value="General Inquiry">General Inquiry</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom: 1.25rem;">
+        <label style="display: block; font-size: var(--step--1); font-weight: 500; margin-bottom: 0.35rem; color: var(--fg);">Message *</label>
+        <textarea name="message" required rows="4" placeholder="Briefly describe your project scope and timeline..." style="width: 100%; padding: 0.6rem 0.85rem; background: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-xs); color: var(--fg); font-size: var(--step--1); outline: none; resize: vertical;"></textarea>
+      </div>
+
+      <button type="submit" id="submitBtn" class="pill-btn" style="background-color: var(--accent); color: var(--accent-contrast); font-weight: 600; cursor: pointer; border: none; padding: 0.6rem 1.25rem;">
+        Send Message ➔
+      </button>
+    </form>
+  </section>
+
+  <div class="cards-list">
+    <article class="entry-card" style="padding: 1.25rem 1.5rem;">
+      <h3 class="entry-card-title" style="font-size: var(--step-0); margin-bottom: 0.35rem;">Direct Contact</h3>
+      <p class="entry-card-desc">
+        Email: <a href="mailto:hello@netspacedev.com" style="color: var(--accent-text);">hello@netspacedev.com</a> • WhatsApp / Call: +94 77 123 4567
+      </p>
+    </article>
   </div>
 </BaseLayout>
 
@@ -105,16 +70,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const originalBtnText = submitBtn.textContent;
+      const origText = submitBtn.textContent;
       submitBtn.textContent = 'Sending...';
       submitBtn.disabled = true;
 
-      const formData = new FormData(form);
+      const fd = new FormData(form);
       const payload = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        subject: formData.get('subject'),
-        message: formData.get('message')
+        name: fd.get('name'),
+        email: fd.get('email'),
+        subject: fd.get('subject'),
+        message: fd.get('message')
       };
 
       try {
@@ -129,22 +94,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         if (res.ok && data.success) {
           alertBox.style.display = 'block';
-          alertBox.style.background = 'rgba(52, 211, 153, 0.15)';
-          alertBox.style.border = '1px solid rgba(52, 211, 153, 0.4)';
-          alertBox.style.color = '#34d399';
-          alertBox.textContent = data.message || 'Inquiry submitted successfully!';
+          alertBox.style.backgroundColor = 'rgba(63, 185, 80, 0.15)';
+          alertBox.style.border = '1px solid rgba(63, 185, 80, 0.4)';
+          alertBox.style.color = '#7ee787';
+          alertBox.textContent = data.message || 'Message sent successfully!';
           form.reset();
         } else {
-          throw new Error(data.error || 'Failed to submit inquiry.');
+          throw new Error(data.error || 'Failed to submit.');
         }
       } catch (err: any) {
         alertBox.style.display = 'block';
-        alertBox.style.background = 'rgba(248, 81, 73, 0.15)';
+        alertBox.style.backgroundColor = 'rgba(248, 81, 73, 0.15)';
         alertBox.style.border = '1px solid rgba(248, 81, 73, 0.4)';
         alertBox.style.color = '#ff7b72';
-        alertBox.textContent = err.message || 'An error occurred. Please try again.';
+        alertBox.textContent = err.message || 'Failed to submit. Please try again.';
       } finally {
-        submitBtn.textContent = originalBtnText;
+        submitBtn.textContent = origText;
         submitBtn.disabled = false;
       }
     });
