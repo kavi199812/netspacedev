@@ -34,15 +34,17 @@ const currentPath = Astro.url.pathname;
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
 
-  <!-- Prevent Theme Flash -->
+  <!-- System Theme & Local Preference (Prevent Theme Flash) -->
   <script is:inline>
     (() => {
       try {
-        const theme = localStorage.getItem('theme');
-        if (theme === 'light') {
-          document.documentElement.setAttribute('data-theme', 'light');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+          document.documentElement.setAttribute('data-theme', savedTheme === 'light' ? 'light' : 'ink');
         } else {
-          document.documentElement.setAttribute('data-theme', 'ink');
+          // Auto-detect OS / System theme preference
+          const systemPrefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+          document.documentElement.setAttribute('data-theme', systemPrefersLight ? 'light' : 'ink');
         }
       } catch (e) {
         document.documentElement.setAttribute('data-theme', 'ink');

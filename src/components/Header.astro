@@ -125,6 +125,17 @@ const navItems = [
 
   syncThemeIcons();
 
+  // Listen for system OS theme changes if user hasn't manually chosen a preference
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) {
+        const newTheme = e.matches ? 'light' : 'ink';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        syncThemeIcons();
+      }
+    });
+  }
+
   if (themeBtn) {
     themeBtn.addEventListener('click', () => {
       const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
