@@ -1,0 +1,230 @@
+---
+/**
+ * FaqSection.astro
+ * Frequently Asked Questions section tailored for NetSpace Dev
+ * Matching the exact astro-narrow design system and DreamX agency content.
+ */
+
+const faqs = [
+  {
+    question: "What types of software solutions does NetSpace Dev build?",
+    answer: "We specialize in custom web applications, SaaS platforms, high-performance REST APIs, cross-platform mobile apps, and enterprise database systems. From initial system architecture and UI/UX design to full-cycle development and cloud deployment, we engineer software built for speed, security, and scalability."
+  },
+  {
+    question: "What types of websites do you develop?",
+    answer: "We develop high-performance corporate websites, SaaS landing platforms, client portals, interactive marketplaces, and custom CMS-driven web solutions. Using modern frameworks like Astro, React, Node.js, and robust PHP/MySQL backends, our websites achieve sub-second load times and peak search engine optimization (SEO)."
+  },
+  {
+    question: "What is your project timeline and delivery workflow?",
+    answer: "We operate on transparent, weekly sprint cycles. A typical MVP or custom web application takes between 3 to 8 weeks depending on system complexity and third-party integrations. You receive weekly milestone demonstrations, private Git repository access, and live staging previews so you always know exactly how your product is progressing."
+  },
+  {
+    question: "What engagement and pricing models do you offer?",
+    answer: "We offer flexible models tailored to your requirements: fixed-scope milestone pricing for well-defined MVPs and project launches, or dedicated monthly sprint retainers for businesses needing an ongoing, high-velocity engineering team without the overhead of full-time hiring."
+  },
+  {
+    question: "Do you provide post-launch maintenance and technical support?",
+    answer: "Yes, every delivery includes dedicated post-launch warranty support to resolve any edge-case bugs and ensure smooth operations. We also provide long-term SLA maintenance contracts covering security patches, database backups, uptime monitoring, and ongoing feature updates."
+  },
+  {
+    question: "Who owns the intellectual property (IP) and source code?",
+    answer: "You own 100% of the code, intellectual property, design assets, and database architecture. Upon project handover or milestone completion, all source code and documentation are transferred directly to your organization's private repositories."
+  }
+];
+---
+
+<section class="content-section faq-section" id="faq">
+  <div class="faq-header">
+    <div class="faq-badge-wrap">
+      <span class="faq-badge">FAQ</span>
+    </div>
+    <h2 class="content-section-title faq-title">Frequently Asked Questions</h2>
+    <p class="faq-subtitle">Everything you need to know about partnering with NetSpace Dev for your software engineering needs.</p>
+  </div>
+
+  <div class="faq-list">
+    {faqs.map((faq, index) => (
+      <details class="faq-item" name="faq-group">
+        <summary class="faq-summary">
+          <span class="faq-question-text">{faq.question}</span>
+          <span class="faq-icon-box" aria-hidden="true">
+            <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path class="vertical-line" d="M12 5v14" />
+              <path d="M5 12h14" />
+            </svg>
+          </span>
+        </summary>
+        <div class="faq-content">
+          <p class="faq-answer">{faq.answer}</p>
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    margin-bottom: 2.75rem;
+  }
+
+  .faq-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .faq-badge-wrap {
+    margin-bottom: 0.5rem;
+  }
+
+  .faq-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.65rem;
+    border-radius: var(--radius-xs);
+    background-color: var(--muted);
+    border: 1px solid var(--border);
+    color: var(--accent-text);
+  }
+
+  .faq-title {
+    margin-bottom: 0.35rem;
+  }
+
+  .faq-subtitle {
+    font-size: var(--step--1);
+    color: var(--fg-muted);
+    line-height: 1.5;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .faq-item {
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    border-radius: var(--radius);
+    transition: all 0.2s ease;
+    overflow: hidden;
+  }
+
+  .faq-item:hover {
+    border-color: var(--border-strong);
+    background-color: var(--hover);
+  }
+
+  .faq-item[open] {
+    border-color: var(--border-strong);
+    background-color: var(--surface);
+    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.2);
+  }
+
+  .faq-summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.15rem 1.35rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: var(--step-0);
+    color: var(--fg);
+    user-select: none;
+    transition: color 0.15s ease;
+  }
+
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-summary:hover {
+    color: var(--fg);
+  }
+
+  .faq-question-text {
+    flex: 1;
+    line-height: 1.45;
+  }
+
+  .faq-icon-box {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-xs);
+    background-color: var(--muted);
+    border: 1px solid var(--border);
+    color: var(--fg-muted);
+    flex-shrink: 0;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .faq-item:hover .faq-icon-box {
+    color: var(--fg);
+    border-color: var(--border-strong);
+  }
+
+  .faq-icon {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Morph plus to minus or rotate 45deg on open */
+  .faq-item[open] .faq-icon-box {
+    background-color: var(--accent-bg);
+    border-color: var(--accent-text);
+    color: var(--accent-text);
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-content {
+    padding: 0 1.35rem 1.25rem 1.35rem;
+    animation: faqFadeIn 0.25s ease-out;
+  }
+
+  .faq-answer {
+    color: var(--fg-muted);
+    font-size: var(--step--1);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  @keyframes faqFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .faq-summary {
+      padding: 1rem 1.15rem;
+      font-size: 0.95rem;
+    }
+    
+    .faq-content {
+      padding: 0 1.15rem 1.15rem 1.15rem;
+    }
+
+    .faq-icon-box {
+      width: 24px;
+      height: 24px;
+    }
+
+    .faq-icon {
+      width: 15px;
+      height: 15px;
+    }
+  }
+</style>

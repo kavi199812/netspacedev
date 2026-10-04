@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TechStackSlider from '../components/TechStackSlider.astro';
+import FaqSection from '../components/FaqSection.astro';
 import { fetchProjects, fetchBlogs } from '../utils/api.js';
 
 const allProjects = await fetchProjects();
@@ -96,6 +97,9 @@ const recentBlogs = allBlogs.slice(0, 2);
       </a>
     </div>
   </section>
+
+  <!-- FAQ Section (Directly Above Recent Posts) -->
+  <FaqSection />
 
   <!-- Recent Posts Section (At the Bottom) -->
   <section class="content-section">
