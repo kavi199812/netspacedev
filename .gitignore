@@ -8,10 +8,11 @@ yarn-error.log*
 .astro/
 dist/
 
-# Environment Variables & Local Config
+# Environment Variables & Local Config (Secret database keys)
 .env
-.env.production
-.env.local
+.env.*
+*.env
+!.env.example
 
 # OS Files
 .DS_Store

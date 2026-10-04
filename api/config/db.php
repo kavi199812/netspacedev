@@ -6,8 +6,33 @@
 ini_set('display_errors', 0);
 error_reporting(E_ALL);
 
+// Auto-load .env file if present (root .env or api/config/.env)
+$envSearchPaths = [__DIR__ . '/../../.env', __DIR__ . '/.env'];
+foreach ($envSearchPaths as $envPath) {
+    if (file_exists($envPath) && is_readable($envPath)) {
+        $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        foreach ($lines as $line) {
+            $trimmed = trim($line);
+            if ($trimmed === '' || str_starts_with($trimmed, '#')) {
+                continue;
+            }
+            if (strpos($trimmed, '=') !== false) {
+                [$k, $v] = explode('=', $trimmed, 2);
+                $k = trim($k);
+                $v = trim(trim($v), "\"'");
+                if (getenv($k) === false) {
+                    putenv("{$k}={$v}");
+                    $_ENV[$k] = $v;
+                    $_SERVER[$k] = $v;
+                }
+            }
+        }
+        break;
+    }
+}
+
 // Database credentials
-// In Hostinger, these can be set via environment variables or updated directly
+// In Hostinger, these can be set via .env file or environment variables
 define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
 define('DB_PORT', getenv('DB_PORT') ?: '3306');
 define('DB_NAME', getenv('DB_NAME') ?: 'netspace');
