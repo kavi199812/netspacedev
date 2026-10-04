@@ -48,57 +48,7 @@ const recentBlogs = allBlogs.slice(0, 2);
     </div>
   </section>
 
-  <!-- Recent Posts Section (Identical to Screenshot) -->
-  <section class="content-section">
-    <h2 class="content-section-title">Recent Posts</h2>
-
-    <div class="cards-list">
-      {recentBlogs.map((b, idx) => (
-        <article class="entry-card">
-          <a href={`/blog#${b.slug}`}>
-            <div class="entry-card-layout">
-              <div class="entry-card-body">
-                <h3 class="entry-card-title">{b.title}</h3>
-                <p class="entry-card-desc">{b.excerpt}</p>
-
-                <div class="entry-card-meta">
-                  <span class="meta-item">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
-                    </svg>
-                    <time>{b.created_at ? new Date(b.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'June 27, 2026'}</time>
-                  </span>
-
-                  {b.tags && b.tags.split(',').slice(0, 2).map((t) => (
-                    <span class="meta-tag">#{t.trim()}</span>
-                  ))}
-                </div>
-              </div>
-
-              <!-- 16:9 Thumbnail on the right (like in screenshot) -->
-              {b.cover_image ? (
-                <div class="entry-card-thumb-wrap">
-                  <img src={b.cover_image} alt={b.title} class="entry-card-thumb" loading="lazy" />
-                </div>
-              ) : null}
-            </div>
-          </a>
-        </article>
-      ))}
-    </div>
-
-    <!-- Centered View All Pill Button -->
-    <div class="view-all-wrap">
-      <a href="/blog" class="view-all-btn">
-        <span>View all</span>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14m-7-7 7 7-7 7"/>
-        </svg>
-      </a>
-    </div>
-  </section>
-
-  <!-- Featured Projects Section (Same Exact Layout) -->
+  <!-- Featured Projects Section (Above Recent Posts) -->
   <section class="content-section">
     <h2 class="content-section-title">Featured Projects</h2>
 
@@ -135,6 +85,56 @@ const recentBlogs = allBlogs.slice(0, 2);
 
     <div class="view-all-wrap">
       <a href="/projects" class="view-all-btn">
+        <span>View all</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14m-7-7 7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Recent Posts Section (At the Bottom) -->
+  <section class="content-section">
+    <h2 class="content-section-title">Recent Posts</h2>
+
+    <div class="cards-list">
+      {recentBlogs.map((b, idx) => (
+        <article class="entry-card">
+          <a href={`/blog#${b.slug}`}>
+            <div class="entry-card-layout">
+              <div class="entry-card-body">
+                <h3 class="entry-card-title">{b.title}</h3>
+                <p class="entry-card-desc">{b.excerpt}</p>
+
+                <div class="entry-card-meta">
+                  <span class="meta-item">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+                    </svg>
+                    <time>{b.created_at ? new Date(b.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'June 27, 2026'}</time>
+                  </span>
+
+                  {b.tags && b.tags.split(',').slice(0, 2).map((t) => (
+                    <span class="meta-tag">#{t.trim()}</span>
+                  ))}
+                </div>
+              </div>
+
+              <!-- 16:9 Thumbnail on the right -->
+              {b.cover_image ? (
+                <div class="entry-card-thumb-wrap">
+                  <img src={b.cover_image} alt={b.title} class="entry-card-thumb" loading="lazy" />
+                </div>
+              ) : null}
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+
+    <!-- Centered View All Pill Button -->
+    <div class="view-all-wrap">
+      <a href="/blog" class="view-all-btn">
         <span>View all</span>
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12h14m-7-7 7 7-7 7"/>
