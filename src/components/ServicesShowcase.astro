@@ -247,7 +247,27 @@
     .showcase-footer {
       flex-direction: column;
       align-items: stretch;
-      gap: 1rem;
+      gap: 1.25rem;
+    }
+
+    /* Clean, balanced 2x2 symmetrical grid on mobile devices */
+    .showcase-pills-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .feature-tag {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.5rem 0.4rem;
+      font-size: 0.73rem;
+      text-align: center;
+      white-space: nowrap;
     }
 
     .showcase-actions {
@@ -258,6 +278,24 @@
     .btn-primary,
     .btn-secondary {
       justify-content: center;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .showcase-pills-row {
+      gap: 0.35rem;
+    }
+
+    .feature-tag {
+      font-size: 0.67rem;
+      padding: 0.4rem 0.25rem;
+      gap: 0.3rem;
+    }
+
+    .feature-tag svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
     }
   }
 </style>
