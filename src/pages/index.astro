@@ -4,12 +4,12 @@ import HeroVideo from '../components/HeroVideo.astro';
 import TechStackSlider from '../components/TechStackSlider.astro';
 import ServicesShowcase from '../components/ServicesShowcase.astro';
 import FaqSection from '../components/FaqSection.astro';
+import RecentPostsSlider from '../components/RecentPostsSlider.astro';
 import { fetchProjects, fetchBlogs } from '../utils/api.js';
 
 const allProjects = await fetchProjects();
 const featuredProjects = allProjects.slice(0, 2);
 const allBlogs = await fetchBlogs();
-const recentBlogs = allBlogs.slice(0, 2);
 ---
 
 <BaseLayout title="NetSpace Dev">
@@ -70,53 +70,6 @@ const recentBlogs = allBlogs.slice(0, 2);
   <!-- FAQ Section (Directly Above Recent Posts) -->
   <FaqSection />
 
-  <!-- Recent Posts Section (At the Bottom) -->
-  <section class="content-section">
-    <h2 class="content-section-title">Recent Posts</h2>
-
-    <div class="cards-list">
-      {recentBlogs.map((b, idx) => (
-        <article class="entry-card">
-          <a href={`/blog#${b.slug}`}>
-            <div class="entry-card-layout">
-              <div class="entry-card-body">
-                <h3 class="entry-card-title">{b.title}</h3>
-                <p class="entry-card-desc">{b.excerpt}</p>
-
-                <div class="entry-card-meta">
-                  <span class="meta-item">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
-                    </svg>
-                    <time>{b.created_at ? new Date(b.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'June 27, 2026'}</time>
-                  </span>
-
-                  {b.tags && b.tags.split(',').slice(0, 2).map((t) => (
-                    <span class="meta-tag">#{t.trim()}</span>
-                  ))}
-                </div>
-              </div>
-
-              <!-- 16:9 Thumbnail on the right -->
-              {b.cover_image ? (
-                <div class="entry-card-thumb-wrap">
-                  <img src={b.cover_image} alt={b.title} class="entry-card-thumb" loading="lazy" />
-                </div>
-              ) : null}
-            </div>
-          </a>
-        </article>
-      ))}
-    </div>
-
-    <!-- Centered View All Pill Button -->
-    <div class="view-all-wrap">
-      <a href="/blog" class="view-all-btn">
-        <span>View all</span>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14m-7-7 7 7-7 7"/>
-        </svg>
-      </a>
-    </div>
-  </section>
+  <!-- Recent Posts Slider (Mobile 1 col, Tablet 2 cols, PC 3 cols) -->
+  <RecentPostsSlider blogs={allBlogs} />
 </BaseLayout>

@@ -77,6 +77,42 @@ export const FALLBACK_BLOGS = [
     read_time: '6 min read',
     cover_image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80',
     created_at: '2026-10-01'
+  },
+  {
+    id: 3,
+    title: 'High-Performance Redis Caching Strategies for High-Traffic Applications',
+    slug: 'redis-caching-strategies-high-traffic',
+    excerpt: 'How we achieve sub-10ms response times using Redis in-memory key-value caching and database query invalidation.',
+    author: 'NetSpace Engineering',
+    category: 'Cloud & DevOps',
+    tags: 'Redis, Performance, Caching, Backend',
+    read_time: '4 min read',
+    cover_image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80',
+    created_at: '2026-10-04'
+  },
+  {
+    id: 4,
+    title: 'Design Systems in Practice: Crafting Consistent and Accessible Web UIs',
+    slug: 'design-systems-in-practice-accessible-uis',
+    excerpt: 'Explore design tokens, accessible color contrast standards, and responsive micro-interactions that elevate brand trust.',
+    author: 'UI/UX Design Studio',
+    category: 'UI/UX Design',
+    tags: 'Design System, UI/UX, Accessibility',
+    read_time: '5 min read',
+    cover_image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80',
+    created_at: '2026-10-07'
+  },
+  {
+    id: 5,
+    title: 'Deploying Production Web Applications with Zero Downtime via Git CI/CD',
+    slug: 'zero-downtime-deployment-git-cicd',
+    excerpt: 'Step-by-step walkthrough of automated deployment pipelines, atomic symlink switching, and rollback strategies.',
+    author: 'DevOps Team',
+    category: 'Infrastructure',
+    tags: 'Git, CI/CD, Deployment, Automation',
+    read_time: '7 min read',
+    cover_image: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=800&q=80',
+    created_at: '2026-10-09'
   }
 ];
 
