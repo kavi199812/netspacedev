@@ -4,11 +4,11 @@ import HeroVideo from '../components/HeroVideo.astro';
 import TechStackSlider from '../components/TechStackSlider.astro';
 import ServicesShowcase from '../components/ServicesShowcase.astro';
 import FaqSection from '../components/FaqSection.astro';
+import FeaturedProjectsSlider from '../components/FeaturedProjectsSlider.astro';
 import RecentPostsSlider from '../components/RecentPostsSlider.astro';
 import { fetchProjects, fetchBlogs } from '../utils/api.js';
 
 const allProjects = await fetchProjects();
-const featuredProjects = allProjects.slice(0, 2);
 const allBlogs = await fetchBlogs();
 ---
 
@@ -22,50 +22,8 @@ const allBlogs = await fetchBlogs();
   <!-- Technologies & Stacks Slider -->
   <TechStackSlider />
 
-  <!-- Featured Projects Section (Above Recent Posts) -->
-  <section class="content-section">
-    <h2 class="content-section-title">Featured Projects</h2>
-
-    <div class="cards-list">
-      {featuredProjects.map((p) => (
-        <article class="entry-card">
-          <a href={`/projects#${p.slug}`}>
-            <div class="entry-card-layout">
-              <div class="entry-card-body">
-                <h3 class="entry-card-title">{p.title}</h3>
-                <p class="entry-card-desc">{p.summary}</p>
-
-                <div class="entry-card-meta">
-                  <span class="meta-item">
-                    <span class="meta-tag">{p.category}</span>
-                  </span>
-
-                  {p.technologies && p.technologies.split(',').slice(0, 2).map((tech) => (
-                    <span class="meta-tag">#{tech.trim()}</span>
-                  ))}
-                </div>
-              </div>
-
-              {p.image_url ? (
-                <div class="entry-card-thumb-wrap">
-                  <img src={p.image_url} alt={p.title} class="entry-card-thumb" loading="lazy" />
-                </div>
-              ) : null}
-            </div>
-          </a>
-        </article>
-      ))}
-    </div>
-
-    <div class="view-all-wrap">
-      <a href="/projects" class="view-all-btn">
-        <span>View all</span>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14m-7-7 7 7-7 7"/>
-        </svg>
-      </a>
-    </div>
-  </section>
+  <!-- Featured Projects Slider (Mobile 1 col, Tablet 2 cols, PC 3 cols) -->
+  <FeaturedProjectsSlider projects={allProjects} />
 
   <!-- FAQ Section (Directly Above Recent Posts) -->
   <FaqSection />

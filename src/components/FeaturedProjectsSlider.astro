@@ -1,0 +1,393 @@
+---
+// Featured Projects Slider Component
+// Responsive: 3 columns on PC, 2 columns on Tablet, 1 column on Mobile
+// Features: CSS Scroll Snap, Left/Right controls, and touch swipe
+interface Props {
+  projects: Array<{
+    id?: number;
+    title: string;
+    slug: string;
+    summary?: string;
+    description?: string;
+    category?: string;
+    technologies?: string;
+    image_url?: string;
+    live_url?: string;
+  }>;
+}
+
+const { projects = [] } = Astro.props;
+---
+
+<section class="projects-slider-section" aria-label="Featured Projects Carousel">
+  <div class="slider-header-row">
+    <div>
+      <h2 class="content-section-title" style="margin-bottom: 0.2rem;">Featured Projects</h2>
+      <p class="slider-subtitle">Custom software, high-performance web platforms, and enterprise solutions.</p>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="slider-controls">
+      <button type="button" id="projectSliderPrev" class="slider-nav-btn" aria-label="Previous projects" title="Previous">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+      </button>
+      <button type="button" id="projectSliderNext" class="slider-nav-btn" aria-label="Next projects" title="Next">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- The Slider Track -->
+  <div id="projectSliderTrack" class="slider-track" tabindex="0" role="region" aria-label="Projects slider track">
+    {projects.map((p) => (
+      <article class="slider-item">
+        <a href={`/projects#${p.slug}`} class="project-card-inner">
+          <div class="project-thumb-wrapper">
+            {p.image_url ? (
+              <img src={p.image_url} alt={p.title} class="project-thumb-img" loading="lazy" />
+            ) : (
+              <div class="project-thumb-placeholder">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/>
+                </svg>
+              </div>
+            )}
+            {p.category && <span class="project-cat-badge">{p.category}</span>}
+          </div>
+
+          <div class="project-card-content">
+            <h3 class="project-card-title">{p.title}</h3>
+            {p.summary && <p class="project-card-summary">{p.summary}</p>}
+
+            {p.technologies && (
+              <div class="project-tech-tags">
+                {p.technologies.split(',').slice(0, 3).map((tech) => (
+                  <span class="project-tech-pill">#{tech.trim()}</span>
+                ))}
+              </div>
+            )}
+
+            <div class="project-card-footer">
+              <span class="project-view-link">
+                View project
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14m-7-7 7 7-7 7"/>
+                </svg>
+              </span>
+
+              {p.live_url && (
+                <span class="project-live-indicator" title="Live Deployment Available">
+                  <span class="pulse-dot"></span> Live
+                </span>
+              )}
+            </div>
+          </div>
+        </a>
+      </article>
+    ))}
+  </div>
+
+  <!-- View All Button -->
+  <div class="view-all-wrap">
+    <a href="/projects" class="view-all-btn">
+      <span>View all projects</span>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14m-7-7 7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const track = document.getElementById('projectSliderTrack');
+    const prevBtn = document.getElementById('projectSliderPrev');
+    const nextBtn = document.getElementById('projectSliderNext');
+
+    if (!track || !prevBtn || !nextBtn) return;
+
+    function getSlideStep() {
+      const firstItem = track.querySelector('.slider-item');
+      if (!firstItem) return 300;
+      return firstItem.getBoundingClientRect().width + 16; // width + gap
+    }
+
+    prevBtn.addEventListener('click', () => {
+      track.scrollBy({ left: -getSlideStep(), behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      track.scrollBy({ left: getSlideStep(), behavior: 'smooth' });
+    });
+  })();
+</script>
+
+<style>
+  .projects-slider-section {
+    margin: 2.5rem 0 1.5rem;
+  }
+
+  .slider-header-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .slider-subtitle {
+    font-size: var(--step--1);
+    color: var(--fg-muted);
+    margin: 0;
+  }
+
+  .slider-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .slider-nav-btn {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    color: var(--fg);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .slider-nav-btn:hover {
+    background-color: var(--hover);
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+  }
+
+  /* 
+   * Responsive Slider Track:
+   * PC (>=900px): 3 columns
+   * Tablet (600px - 899px): 2 columns
+   * Mobile (<600px): 1 column
+   */
+  .slider-track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.85rem;
+    padding-top: 0.25rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .slider-track::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .slider-track::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .slider-track::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px;
+  }
+
+  /* Default PC: 3 Columns */
+  .slider-item {
+    flex: 0 0 calc((100% - 2rem) / 3);
+    min-width: 0;
+    scroll-snap-align: start;
+    box-sizing: border-box;
+  }
+
+  /* Tablet: 2 Columns */
+  @media (max-width: 899px) and (min-width: 600px) {
+    .slider-item {
+      flex: 0 0 calc((100% - 1rem) / 2);
+    }
+  }
+
+  /* Mobile: 1 Column */
+  @media (max-width: 599px) {
+    .slider-item {
+      flex: 0 0 100%;
+    }
+  }
+
+  /* Project Card Styling */
+  .project-card-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--fg);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .project-card-inner:hover {
+    border-color: var(--border-strong);
+    background-color: var(--hover);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  :global([data-theme="light"]) .project-card-inner:hover {
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  }
+
+  .project-thumb-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: #0c0f14;
+  }
+
+  .project-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .project-card-inner:hover .project-thumb-img {
+    transform: scale(1.05);
+  }
+
+  .project-thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    color: var(--fg-muted);
+    background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.08));
+  }
+
+  .project-cat-badge {
+    position: absolute;
+    top: 0.65rem;
+    left: 0.65rem;
+    padding: 0.25rem 0.55rem;
+    border-radius: var(--radius-xs);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    background-color: rgba(18, 22, 31, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    z-index: 2;
+  }
+
+  .project-card-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 1.15rem;
+  }
+
+  .project-card-title {
+    font-size: var(--step-0);
+    font-weight: 600;
+    line-height: 1.35;
+    margin: 0 0 0.45rem;
+    color: var(--fg);
+    transition: color 0.2s ease;
+  }
+
+  .project-card-inner:hover .project-card-title {
+    color: var(--accent-text);
+  }
+
+  .project-card-summary {
+    font-size: var(--step--1);
+    color: var(--fg-muted);
+    line-height: 1.5;
+    margin: 0 0 0.85rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex-grow: 1;
+  }
+
+  .project-tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 0.95rem;
+  }
+
+  .project-tech-pill {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-xs);
+    background-color: var(--muted);
+    border: 1px solid var(--border);
+    color: var(--fg-muted);
+    font-family: var(--font-mono, monospace);
+  }
+
+  .project-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    font-size: var(--step--1);
+  }
+
+  .project-view-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--fg-muted);
+    font-weight: 500;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .project-card-inner:hover .project-view-link {
+    color: var(--accent-text);
+  }
+
+  .project-card-inner:hover .project-view-link svg {
+    transform: translateX(3px);
+  }
+
+  .project-live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+  }
+
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #10b981;
+    box-shadow: 0 0 6px #10b981;
+  }
+</style>

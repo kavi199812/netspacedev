@@ -50,6 +50,42 @@ export const FALLBACK_PROJECTS = [
     image_url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80',
     live_url: 'https://example.com/demo/medical',
     is_featured: 1
+  },
+  {
+    id: 4,
+    title: 'Omnichannel Luxury E-Commerce Platform',
+    slug: 'omnichannel-luxury-ecommerce',
+    summary: 'Headless storefront with ultra-fast search, multi-currency checkout, and ERP sync.',
+    description: 'Engineered high-converting digital retail experience with 99+ Google Lighthouse score and instant checkout.',
+    category: 'Web Development',
+    technologies: 'Next.js, TypeScript, Stripe, GraphQL, Tailwind',
+    image_url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+    live_url: 'https://example.com/demo/ecommerce',
+    is_featured: 1
+  },
+  {
+    id: 5,
+    title: 'Industrial IoT Telemetry & Analytics Hub',
+    slug: 'industrial-iot-analytics-hub',
+    summary: 'Real-time sensor monitoring, predictive equipment maintenance, and energy audits.',
+    description: 'Streamed 100k data points/sec with low latency WebSockets and automated anomaly alerting.',
+    category: 'Enterprise Software',
+    technologies: 'Vue.js, TimescaleDB, MQTT, Go, Docker',
+    image_url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
+    live_url: 'https://example.com/demo/iot',
+    is_featured: 1
+  },
+  {
+    id: 6,
+    title: 'Global Travel & Hotel Reservation Engine',
+    slug: 'global-travel-reservation-engine',
+    summary: 'High-availability booking engine connecting global GDS APIs and live flight schedules.',
+    description: 'Built distributed search engine supporting sub-500ms multi-vendor rate comparisons and instantaneous confirmation.',
+    category: 'Web & Mobile App',
+    technologies: 'Astro, TypeScript, Redis, Cloudflare, Node.js',
+    image_url: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80',
+    live_url: 'https://example.com/demo/travel',
+    is_featured: 1
   }
 ];
 
