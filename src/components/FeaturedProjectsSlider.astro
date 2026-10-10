@@ -128,7 +128,15 @@ const { projects = [] } = Astro.props;
 
 <style>
   .projects-slider-section {
-    margin: 2.5rem 0 1.5rem;
+    margin-top: 4.5rem;
+    margin-bottom: 4.5rem;
+  }
+
+  @media (max-width: 767px) {
+    .projects-slider-section {
+      margin-top: 3.25rem;
+      margin-bottom: 3.25rem;
+    }
   }
 
   .slider-header-row {
