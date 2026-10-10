@@ -1,0 +1,237 @@
+---
+// Premium Native Hero Video Component
+// Direct MP4 video: Edge-to-edge fill, instant autoplay, zero YouTube UI, and native Fullscreen toggle
+interface Props {
+  videoSrc?: string;
+  poster?: string;
+}
+
+const { 
+  videoSrc = "/videos/hero.mp4", 
+  poster = "/images/hero-poster.jpg" 
+} = Astro.props;
+---
+
+<section class="hero-video-section" aria-label="Hero Showcase Video">
+  <div id="hero-card-container" class="hero-video-card">
+    <video
+      id="hero-native-player"
+      class="hero-native-video"
+      src={videoSrc}
+      poster={poster}
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      disablepictureinpicture
+    ></video>
+
+    <!-- Subtle vignette glass overlay -->
+    <div class="video-overlay-tint" aria-hidden="true"></div>
+
+    <!-- Floating Clean Fullscreen & Audio Action Buttons -->
+    <div class="video-controls-overlay">
+      <button 
+        id="toggle-hero-sound" 
+        class="glass-action-btn" 
+        aria-label="Toggle Sound" 
+        title="Toggle audio"
+      >
+        <svg id="hero-sound-muted-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+        <svg id="hero-sound-on-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+      </button>
+
+      <button 
+        id="toggle-hero-fs" 
+        class="glass-action-btn" 
+        aria-label="Toggle Fullscreen" 
+        title="Toggle fullscreen"
+      >
+        <svg id="fs-expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+        </svg>
+        <svg id="fs-compress-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+          <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+        </svg>
+        <span class="fs-text">Full Screen</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const video = document.getElementById('hero-native-player');
+    const card = document.getElementById('hero-card-container');
+    const fsBtn = document.getElementById('toggle-hero-fs');
+    const expandIcon = document.getElementById('fs-expand-icon');
+    const compressIcon = document.getElementById('fs-compress-icon');
+    const soundBtn = document.getElementById('toggle-hero-sound');
+    const soundMutedIcon = document.getElementById('hero-sound-muted-icon');
+    const soundOnIcon = document.getElementById('hero-sound-on-icon');
+
+    // Fullscreen Toggle Controller
+    if (fsBtn && (card || video)) {
+      fsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+          if (card && card.requestFullscreen) {
+            card.requestFullscreen();
+          } else if (card && card.webkitRequestFullscreen) {
+            card.webkitRequestFullscreen();
+          } else if (video && video.webkitEnterFullscreen) {
+            video.webkitEnterFullscreen();
+          }
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+          }
+        }
+      });
+
+      const updateFsState = () => {
+        const isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement);
+        if (expandIcon && compressIcon) {
+          expandIcon.style.display = isFullscreen ? 'none' : 'block';
+          compressIcon.style.display = isFullscreen ? 'block' : 'none';
+        }
+      };
+
+      document.addEventListener('fullscreenchange', updateFsState);
+      document.addEventListener('webkitfullscreenchange', updateFsState);
+    }
+
+    // Sound Toggle Controller
+    if (soundBtn && video) {
+      soundBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (video.muted) {
+          video.muted = false;
+          video.volume = 1.0;
+          if (soundMutedIcon) soundMutedIcon.style.display = 'none';
+          if (soundOnIcon) soundOnIcon.style.display = 'block';
+        } else {
+          video.muted = true;
+          if (soundMutedIcon) soundMutedIcon.style.display = 'block';
+          if (soundOnIcon) soundOnIcon.style.display = 'none';
+        }
+      });
+    }
+  })();
+</script>
+
+<style>
+  .hero-video-section {
+    width: 100%;
+    margin: 0.5rem 0 2rem;
+  }
+
+  .hero-video-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background-color: #000000;
+    overflow: hidden;
+    box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.35);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  :global([data-theme="light"]) .hero-video-card {
+    border-color: var(--border);
+    box-shadow: 0 12px 30px -4px rgba(15, 23, 42, 0.1);
+  }
+
+  /* Full 100% absolute edge-to-edge cover of the 16:9 frame */
+  .hero-native-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    display: block;
+    background-color: #000000;
+  }
+
+  /* Subtle vignette / highlight border */
+  .video-overlay-tint {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: var(--radius);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  :global([data-theme="light"]) .video-overlay-tint {
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Modern Glass Buttons (Bottom Right) */
+  .video-controls-overlay {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .glass-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.4rem 0.8rem;
+    background: rgba(12, 15, 20, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 9999px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+  }
+
+  .glass-action-btn:hover {
+    background: rgba(22, 27, 36, 0.95);
+    border-color: rgba(255, 255, 255, 0.45);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  }
+
+  .glass-action-btn svg {
+    flex-shrink: 0;
+  }
+
+  .fs-text {
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 600px) {
+    .video-controls-overlay {
+      bottom: 0.65rem;
+      right: 0.65rem;
+    }
+
+    .glass-action-btn {
+      padding: 0.35rem 0.65rem;
+      font-size: 0.7rem;
+    }
+  }
+</style>
