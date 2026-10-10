@@ -18,18 +18,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <form id="contactForm">
       <div class="form-grid-row">
         <div>
-          <label style="display: block; font-size: var(--step--1); font-weight: 500; margin-bottom: 0.35rem; color: var(--fg);">Your Name *</label>
-          <input type="text" name="name" required placeholder="Dilshan Fernando" style="width: 100%; padding: 0.6rem 0.85rem; background: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-xs); color: var(--fg); font-size: var(--step--1); outline: none;" />
+          <label class="form-label">Your Name *</label>
+          <input type="text" name="name" required placeholder="Dilshan Fernando" class="form-input" />
         </div>
         <div>
-          <label style="display: block; font-size: var(--step--1); font-weight: 500; margin-bottom: 0.35rem; color: var(--fg);">Work Email *</label>
-          <input type="email" name="email" required placeholder="name@company.com" style="width: 100%; padding: 0.6rem 0.85rem; background: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-xs); color: var(--fg); font-size: var(--step--1); outline: none;" />
+          <label class="form-label">Work Email *</label>
+          <input type="email" name="email" required placeholder="name@company.com" class="form-input" />
         </div>
       </div>
 
       <div style="margin-bottom: 1rem;">
-        <label style="display: block; font-size: var(--step--1); font-weight: 500; margin-bottom: 0.35rem; color: var(--fg);">Subject / Service</label>
-        <select name="subject" style="width: 100%; padding: 0.6rem 0.85rem; background: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-xs); color: var(--fg); font-size: var(--step--1); outline: none;">
+        <label class="form-label">Subject / Service</label>
+        <select name="subject" class="form-input form-select">
           <option value="Custom Web App Development">Custom Web App Development</option>
           <option value="Mobile App (iOS / Android)">Mobile App (iOS / Android)</option>
           <option value="Cloud Architecture & DevOps">Cloud Architecture & DevOps</option>
@@ -39,11 +39,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
 
       <div style="margin-bottom: 1.25rem;">
-        <label style="display: block; font-size: var(--step--1); font-weight: 500; margin-bottom: 0.35rem; color: var(--fg);">Message *</label>
-        <textarea name="message" required rows="4" placeholder="Briefly describe your project scope and timeline..." style="width: 100%; padding: 0.6rem 0.85rem; background: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-xs); color: var(--fg); font-size: var(--step--1); outline: none; resize: vertical;"></textarea>
+        <label class="form-label">Message *</label>
+        <textarea name="message" required rows="4" placeholder="Briefly describe your project scope and timeline..." class="form-input form-textarea"></textarea>
       </div>
 
-      <button type="submit" id="submitBtn" class="pill-btn" style="background-color: var(--accent); color: var(--accent-contrast); font-weight: 600; cursor: pointer; border: none; padding: 0.6rem 1.25rem;">
+      <button type="submit" id="submitBtn" class="pill-btn" style="background-color: var(--accent); color: var(--accent-contrast); font-weight: 600; cursor: pointer; border: none; padding: 0.65rem 1.4rem;">
         Send Message ➔
       </button>
     </form>
@@ -60,6 +60,47 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
+  .form-label {
+    display: block;
+    font-size: var(--step--1);
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    color: var(--fg);
+  }
+
+  /* 
+   * Strict 16px font-size prevents iOS Safari and mobile browsers 
+   * from automatically zooming in when input is focused/tapped.
+   */
+  .form-input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: inherit;
+    padding: 0.75rem 0.95rem;
+    background-color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    color: var(--fg);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+
+  .form-input:focus {
+    border-color: var(--accent);
+    background-color: var(--surface);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  }
+
+  .form-select {
+    cursor: pointer;
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 110px;
+  }
+
   .form-grid-row {
     display: grid;
     grid-template-columns: 1fr;
