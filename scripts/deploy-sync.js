@@ -24,6 +24,8 @@ const itemsToSync = [
     'services',
     'blog',
     'contact',
+    'images',
+    'videos',
     'index.html',
     '.htaccess',
     'favicon.svg',
