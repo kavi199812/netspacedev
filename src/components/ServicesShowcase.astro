@@ -1,0 +1,287 @@
+---
+// Modern Premium Web Design & Development Showcase Component
+// Matches the exact design system and themes of other sections (profile-card, entry-card)
+---
+
+<section class="services-showcase-section" aria-label="Web Design & Development Showcase">
+  <div class="showcase-content">
+    <!-- Top Heading: Premium Eyebrow + Bold Title -->
+    <header class="showcase-header">
+      <div class="showcase-eyebrow-pill">
+        <span class="pulse-dot"></span>
+        <span class="eyebrow-label">Premium</span>
+      </div>
+
+      <h2 class="showcase-title">
+        WEB DESIGN <span class="title-amp">&</span> DEVELOPMENT
+      </h2>
+    </header>
+
+    <!-- Narrative Story Paragraphs -->
+    <div class="narrative-container">
+      <p class="narrative-lead">
+        We are a leading <strong>website design company in Sri Lanka</strong>, delivering end-to-end digital solutions that combine creativity, performance, and strategy. As one of the top web design companies in Sri Lanka, our team of expert web designers crafts <em>visually stunning, responsive websites</em> with sleek UI/UX and custom functionality. Choosing a trusted website design company in Sri Lanka ensures your brand leaves a lasting impression across all devices.
+      </p>
+      <p class="narrative-lead">
+        As a premier website design company in Sri Lanka, we also specialize in <strong>web development company services</strong> and e-commerce platforms that turn visitors into loyal customers. Our expert team creates intuitive navigation, fast-loading pages, and engaging designs, ensuring your business thrives online, enhances user experience, and maximizes conversions.
+      </p>
+    </div>
+
+    <!-- Feature Pills & Action Buttons -->
+    <div class="showcase-footer">
+      <div class="showcase-pills-row">
+        <span class="feature-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          High Performance
+        </span>
+        <span class="feature-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+          Bespoke UI/UX
+        </span>
+        <span class="feature-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Conversion Driven
+        </span>
+      </div>
+
+      <div class="showcase-actions">
+        <a href="/contact" class="btn-primary">
+          <span>Start a Project</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+        <a href="/services" class="btn-secondary">
+          <span>Explore Services</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Seamless Design System Card: Pure CSS tokens identical to .profile-card and .entry-card */
+  .services-showcase-section {
+    position: relative;
+    margin: 1.5rem 0 2.25rem;
+    padding: 2.25rem 2rem 2rem;
+    border-radius: var(--radius);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .showcase-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Header Section */
+  .showcase-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.25rem;
+  }
+
+  .showcase-eyebrow-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+  }
+
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--accent-text);
+    box-shadow: 0 0 6px var(--accent-text);
+    animation: pulse-dot 2s infinite ease-in-out;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+  }
+
+  .eyebrow-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-text);
+  }
+
+  .showcase-title {
+    font-family: var(--font-sans);
+    font-size: clamp(1.85rem, 4.2vw, 2.75rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    margin: 0;
+    color: var(--fg);
+  }
+
+  .title-amp {
+    color: var(--accent-text);
+    margin: 0 0.15rem;
+  }
+
+  /* Narrative Paragraphs */
+  .narrative-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+  }
+
+  .narrative-lead {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--fg-muted);
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+
+  .narrative-lead strong {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  .narrative-lead em {
+    color: var(--fg);
+    font-style: normal;
+  }
+
+  /* Footer Section */
+  .showcase-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .showcase-pills-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .feature-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.75rem;
+    background-color: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--fg);
+    user-select: none;
+    transition: all 0.2s ease;
+  }
+
+  .feature-tag svg {
+    color: var(--accent-text);
+  }
+
+  .feature-tag:hover {
+    border-color: var(--border-strong);
+    background-color: var(--hover);
+    transform: translateY(-1px);
+  }
+
+  /* Action Buttons */
+  .showcase-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1.15rem;
+    background-color: var(--accent);
+    color: var(--accent-contrast);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: var(--radius-xs);
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1rem;
+    background-color: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: var(--radius-xs);
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--hover);
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .services-showcase-section {
+      padding: 1.75rem 1.25rem 1.5rem;
+    }
+
+    .showcase-title {
+      font-size: 1.85rem;
+    }
+
+    .showcase-footer {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+    }
+
+    .showcase-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      justify-content: center;
+    }
+  }
+</style>

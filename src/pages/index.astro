@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TechStackSlider from '../components/TechStackSlider.astro';
+import ServicesShowcase from '../components/ServicesShowcase.astro';
 import FaqSection from '../components/FaqSection.astro';
 import { fetchProjects, fetchBlogs } from '../utils/api.js';
 
@@ -49,6 +50,9 @@ const recentBlogs = allBlogs.slice(0, 2);
       </div>
     </div>
   </section>
+
+  <!-- Services Showcase Section (Web Design & Development Highlights) -->
+  <ServicesShowcase />
 
   <!-- Technologies & Stacks Slider -->
   <TechStackSlider />
